@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SphereCollider))]
 public class BaseBullet : MonoBehaviour
 {
     [SerializeField] private float bulletSpeed = 1f;
@@ -19,6 +20,7 @@ public class BaseBullet : MonoBehaviour
     private void DestroyBullet()
     {
         Destroy(GetComponent<Rigidbody>());
+        GetComponent<SphereCollider>().isTrigger = false;
         Destroy(this);
     }
 

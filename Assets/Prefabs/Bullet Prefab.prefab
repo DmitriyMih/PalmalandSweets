@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 835073058848793708}
   - component: {fileID: 835073058848793710}
+  - component: {fileID: -3558684226781234388}
   - component: {fileID: 2617568779356871823}
   - component: {fileID: 835073058848793711}
   - component: {fileID: 835073058848793699}
@@ -49,6 +50,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 25
+--- !u!114 &-3558684226781234388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835073058848793696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d5592373c75e54c84d4ffc57d35224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathCreator: {fileID: 0}
+  sphereItem: {fileID: 0}
+  distanceTravelled: 0
+  followSpeed: 1.5
+  isMove: 0
 --- !u!114 &2617568779356871823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,9 +79,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyTransform: {fileID: 0}
+  pathFollower: {fileID: 0}
+  bodyTransform: {fileID: 167195861301886081}
   rotationSpeed: 1
-  IsMove: 1
+  isMove: 0
 --- !u!54 &835073058848793711
 Rigidbody:
   m_ObjectHideFlags: 0

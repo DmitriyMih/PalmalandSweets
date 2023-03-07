@@ -23,6 +23,11 @@ public class PathFollower : MonoBehaviour
         sphereItem = GetComponent<BaseSphereItem>();
     }
 
+    public void AddPathCreator(PathCreator pathCreator)
+    {
+        this.pathCreator = pathCreator;
+    }
+
     private void OnEnable()
     {
         if (sphereItem != null)
