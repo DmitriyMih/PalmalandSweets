@@ -12,23 +12,35 @@ public class BaseBullet : MonoBehaviour
         return bulletSpeed;
     }
 
-    private void Connected(BaseSphereItem baseSphereItem)
+    [SerializeField] private Direction connectDirection;
+    private enum Direction
     {
-        Debug.Log("Connect");
+        Forward,
+        Back
+    }
+
+    private void Connected(PathFollower pathFollower, Vector3 connectionPosition)
+    {
+        Vector2 centralPoint = new Vector2(pathFollower.transform.position.x, pathFollower.transform.position.z);
+        Vector2 connectionPoint = new Vector2(connectionPosition.x, connectionPosition.z);
+
+        Vector2 direction = connectionPoint - centralPoint;
+        connectDirection = direction.y > 0 ? Direction.Forward : Direction.Back;
     }
 
     private void DestroyBullet()
     {
-        Destroy(GetComponent<Rigidbody>());
         GetComponent<SphereCollider>().isTrigger = false;
+
+        Destroy(GetComponent<Rigidbody>());
         Destroy(this);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out BaseSphereItem baseSphereItem))
+        if (other.TryGetComponent(out PathFollower pathFollower))
         {
-            Connected(baseSphereItem); 
+            Connected(pathFollower, other.ClosestPoint(transform.position));
             DestroyBullet();
         }
     }

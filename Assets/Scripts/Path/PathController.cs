@@ -6,11 +6,11 @@ using PathCreation;
 [RequireComponent(typeof(PathCreator))]
 public class PathController : MonoBehaviour
 {
-    private PathCreator pathCreator;
     [SerializeField] private Distributor distributor;
+    private PathCreator pathCreator;
 
     [SerializeField] private float moveSpeed = 1f;
-    [SerializeField] private float tempSpeed;
+    private float tempSpeed;
 
     [SerializeField] private List<PathFollower> itemsList = new List<PathFollower>();
 
@@ -52,8 +52,9 @@ public class PathController : MonoBehaviour
         if (sphereItem == null)
             return;
 
-        sphereItem.AddPathCreator(pathCreator);
+        sphereItem.ChangePathCreator(pathCreator);
         sphereItem.ChangeMoveSpeed(moveSpeed);
+        sphereItem.ChangePathController(this);
 
         if (index != -1)
         {
@@ -62,6 +63,8 @@ public class PathController : MonoBehaviour
         }
         else
             itemsList.Add(sphereItem);
+
+        sphereItem.transform.parent = transform;
     }
 
     public void RemoveSphereItem(PathFollower sphereItem)
@@ -69,6 +72,8 @@ public class PathController : MonoBehaviour
         if (sphereItem == null)
             return;
 
+        sphereItem.ChangePathCreator(null);
+        sphereItem.ChangePathController(null);
         itemsList.Remove(sphereItem);
     }
 }

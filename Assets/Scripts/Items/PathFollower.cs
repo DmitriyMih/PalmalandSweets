@@ -7,6 +7,8 @@ public class PathFollower : MonoBehaviour
 {
     [Header("Connect Settings")]
     [SerializeField] private PathCreator pathCreator;
+    [SerializeField] private PathController pathController;
+
     [SerializeField] private BaseSphereItem sphereItem;
 
     [Header("Move Settings")]
@@ -23,7 +25,12 @@ public class PathFollower : MonoBehaviour
         sphereItem = GetComponent<BaseSphereItem>();
     }
 
-    public void AddPathCreator(PathCreator pathCreator)
+    public void ChangePathController (PathController pathController)
+    {
+        this.pathController = pathController;
+    }
+        
+    public void ChangePathCreator(PathCreator pathCreator)
     {
         this.pathCreator = pathCreator;
     }
@@ -58,7 +65,7 @@ public class PathFollower : MonoBehaviour
         }
         else
             isMove = true;
-        
+
         distanceTravelled += followSpeed * Time.deltaTime;
         transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
