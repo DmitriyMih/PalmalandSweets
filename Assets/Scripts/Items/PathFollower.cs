@@ -28,6 +28,11 @@ public class PathFollower : MonoBehaviour
         this.pathCreator = pathCreator;
     }
 
+    public void ChangeMoveSpeed(float moveSpeed)
+    {
+        followSpeed = moveSpeed;
+    }
+
     private void OnEnable()
     {
         if (sphereItem != null)

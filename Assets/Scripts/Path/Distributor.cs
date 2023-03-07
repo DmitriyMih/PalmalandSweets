@@ -7,7 +7,7 @@ public class Distributor : MonoBehaviour
     [SerializeField] private PathController pathController;
 
     [Header("Spawn Settings")]
-    [SerializeField] private BaseSphereItem itemPrefab;
+    [SerializeField] private PathFollower itemPrefab;
     [SerializeField] private Transform spawnPoint;
 
     [Space]
@@ -18,25 +18,33 @@ public class Distributor : MonoBehaviour
     [SerializeField] private float maxSpawnTime;
     [SerializeField] private float currentSpawnTime;
 
+    [SerializeField] private float acceleration;
+
     private void Awake()
     {
         currentSpawnCount = maxSpawnCount;
+        currentSpawnTime = maxSpawnTime;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (currentSpawnCount <= 0 || pathController == null || spawnPoint == null)
             return;
 
-        if (currentSpawnTime < 0)
+        if (currentSpawnTime >= maxSpawnTime * acceleration)
         {
-            currentSpawnTime = maxSpawnTime;
+            currentSpawnTime = 0;
             currentSpawnCount -= 1;
 
-            BaseSphereItem sphereItem = Instantiate(itemPrefab, spawnPoint.position, Quaternion.identity);
-            pathController.AddSphereItem(sphereItem);
+            PathFollower item = Instantiate(itemPrefab, spawnPoint.position, Quaternion.identity);
+            pathController.AddItemInPath(item);
         }
         else
-            currentSpawnTime -= Time.deltaTime;
+            currentSpawnTime += Time.deltaTime;
+    }
+
+    public void ChangeSpeedAcceleration(float newSpeed)
+    {
+        acceleration = maxSpawnTime / newSpeed;
     }
 }

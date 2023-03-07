@@ -7,8 +7,12 @@ using PathCreation;
 public class PathController : MonoBehaviour
 {
     private PathCreator pathCreator;
+    [SerializeField] private Distributor distributor;
 
-    [SerializeField] private List<BaseSphereItem> itemsList = new List<BaseSphereItem>();
+    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float tempSpeed;
+
+    [SerializeField] private List<PathFollower> itemsList = new List<PathFollower>();
 
     private void Awake()
     {
@@ -20,12 +24,36 @@ public class PathController : MonoBehaviour
         return pathCreator;
     }
 
-    public void AddSphereItem(BaseSphereItem sphereItem, int index = -1)
+    private void Update()
+    {
+        if (tempSpeed != moveSpeed)
+        {
+            UpdateItemsMoveSpeed();
+            tempSpeed = moveSpeed;
+        }
+    }
+
+    private void UpdateItemsMoveSpeed()
+    {
+        if (distributor != null)
+            distributor.ChangeSpeedAcceleration(moveSpeed);
+
+        for (int i = 0; i < itemsList.Count; i++)
+        {
+            if (itemsList[i] == null)
+                continue;
+
+            itemsList[i].ChangeMoveSpeed(moveSpeed);
+        }
+    }
+
+    public void AddItemInPath(PathFollower sphereItem, int index = -1)
     {
         if (sphereItem == null)
             return;
 
-        sphereItem.GetComponent<PathFollower>().AddPathCreator(pathCreator);
+        sphereItem.AddPathCreator(pathCreator);
+        sphereItem.ChangeMoveSpeed(moveSpeed);
 
         if (index != -1)
         {
@@ -36,7 +64,7 @@ public class PathController : MonoBehaviour
             itemsList.Add(sphereItem);
     }
 
-    public void RemoveSphereItem(BaseSphereItem sphereItem)
+    public void RemoveSphereItem(PathFollower sphereItem)
     {
         if (sphereItem == null)
             return;
