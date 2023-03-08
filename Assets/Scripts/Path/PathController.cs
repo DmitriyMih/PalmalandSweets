@@ -88,7 +88,7 @@ public class PathController : MonoBehaviour
         else
             itemsList.Add(sphereItem);
 
-        sphereItem.MoveToNewDistance(20f);
+        sphereItem.SetMoveDistance(0f);
         sphereItem.transform.parent = transform;
     }
 

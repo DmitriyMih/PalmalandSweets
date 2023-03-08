@@ -9,11 +9,17 @@ public class BaseSphereItem : MonoBehaviour
 
     [Header("Rotation Settings")]
     [SerializeField] private Transform bodyTransform;
-    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float defaultRotationSpeed = 1f;
+    //[SerializeField] private float currentRotationSpeed;
 
     [SerializeField] protected bool isMove;
 
     private Vector3 rotationDirection = Vector3.up;
+
+    private void Awake()
+    {
+        
+    }
 
     private void FixedUpdate()
     {
@@ -23,11 +29,19 @@ public class BaseSphereItem : MonoBehaviour
         {
             if (bodyTransform != null)
             {
-                float rotationSpeed = pathFollower == null ? this.rotationSpeed : pathFollower.FollowSpeed;
+                float rotationSpeed = pathFollower == null ? this.defaultRotationSpeed : pathFollower.CurrentSpeed;
                 bodyTransform.transform.Rotate(rotationDirection, rotationSpeed);
             }
         }
     }
+
+    //public void SetRotationSpeed(float newRotationSpeed = -1f)
+    //{
+    //    if (newRotationSpeed == -1f)
+    //        currentRotationSpeed = defaultRotationSpeed;
+    //    else
+    //        currentRotationSpeed = newRotationSpeed;
+    //}
 
     public void AddFollower(PathFollower pathFollower)
     {
