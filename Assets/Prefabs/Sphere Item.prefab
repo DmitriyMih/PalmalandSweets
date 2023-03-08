@@ -148,7 +148,7 @@ MonoBehaviour:
   pathController: {fileID: 0}
   sphereItem: {fileID: 0}
   distanceTravelled: 0
-  followSpeed: 35.21
+  followSpeed: 0
   isMove: 0
 --- !u!114 &5622891057955660221
 MonoBehaviour:

@@ -25,14 +25,37 @@ public class PathFollower : MonoBehaviour
         sphereItem = GetComponent<BaseSphereItem>();
     }
 
-    public void ChangePathController (PathController pathController)
+    private void OnEnable()
+    {
+        if (sphereItem != null)
+            sphereItem.AddFollower(this);
+    }
+
+    private void OnDisable()
+    {
+        if (sphereItem != null)
+            sphereItem.RemoveFollower();
+    }
+
+    public PathController GetPathController()
+    {
+        return pathController;
+    }
+
+    public float GetDistanceTravelled()
+    {
+        return distanceTravelled;
+    }
+
+    public void MoveToNewDistance(float newDistance)
+    {
+        distanceTravelled = newDistance;
+    }
+
+    public void ChangePathController(PathController pathController)
     {
         this.pathController = pathController;
-    }
-        
-    public void ChangePathCreator(PathCreator pathCreator)
-    {
-        this.pathCreator = pathCreator;
+        ChangePathCreator(pathController != null ? pathController.GetPathCreator() : null);
     }
 
     public void ChangeMoveSpeed(float moveSpeed)
@@ -40,20 +63,9 @@ public class PathFollower : MonoBehaviour
         followSpeed = moveSpeed;
     }
 
-    private void OnEnable()
+    private void ChangePathCreator(PathCreator pathCreator)
     {
-        if (sphereItem != null)
-        {
-            sphereItem.AddFollower(this);
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (sphereItem != null)
-        {
-            sphereItem.RemoveFollower();
-        }
+        this.pathCreator = pathCreator;
     }
 
     private void FixedUpdate()
@@ -70,5 +82,4 @@ public class PathFollower : MonoBehaviour
         transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
     }
-
 }

@@ -19,11 +19,6 @@ public class PathController : MonoBehaviour
         pathCreator = GetComponent<PathCreator>();
     }
 
-    public PathCreator GetPathCreator()
-    {
-        return pathCreator;
-    }
-
     private void Update()
     {
         if (tempSpeed != moveSpeed)
@@ -31,6 +26,11 @@ public class PathController : MonoBehaviour
             UpdateItemsMoveSpeed();
             tempSpeed = moveSpeed;
         }
+    }
+
+    public PathCreator GetPathCreator()
+    {
+        return pathCreator;
     }
 
     private void UpdateItemsMoveSpeed()
@@ -47,12 +47,36 @@ public class PathController : MonoBehaviour
         }
     }
 
+    public void AddWithOffset(PathFollower newItem, PathFollower itemInList, Direction direction)
+    {
+        int index = itemsList.IndexOf(itemInList);
+        Debug.Log("Index: " + index);
+
+        if (direction == Direction.Forward)
+        {
+            if (itemsList.Count > 1)
+            {
+                PathFollower[] forwardItems = new PathFollower[0];
+                itemsList.CopyTo(forwardItems, index);
+
+                for (int i = 0; i < forwardItems.Length; i++)
+                {
+                    forwardItems[i].MoveToNewDistance(newItem.GetDistanceTravelled() + (i * 1f));
+                }
+
+            }
+        }
+        else
+        {
+
+        }
+    }
+
     public void AddItemInPath(PathFollower sphereItem, int index = -1)
     {
         if (sphereItem == null)
             return;
 
-        sphereItem.ChangePathCreator(pathCreator);
         sphereItem.ChangeMoveSpeed(moveSpeed);
         sphereItem.ChangePathController(this);
 
@@ -64,6 +88,7 @@ public class PathController : MonoBehaviour
         else
             itemsList.Add(sphereItem);
 
+        sphereItem.MoveToNewDistance(20f);
         sphereItem.transform.parent = transform;
     }
 
@@ -72,7 +97,6 @@ public class PathController : MonoBehaviour
         if (sphereItem == null)
             return;
 
-        sphereItem.ChangePathCreator(null);
         sphereItem.ChangePathController(null);
         itemsList.Remove(sphereItem);
     }
