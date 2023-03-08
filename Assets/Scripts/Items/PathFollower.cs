@@ -29,6 +29,7 @@ public class PathFollower : MonoBehaviour
 
     [SerializeField] private float targetDistance;
     [SerializeField] private bool isChase;
+    [SerializeField] private bool isChaseForward;
 
     public float CurrentSpeed => currentSpeed;
     public bool IsMove => isMove;
@@ -37,7 +38,7 @@ public class PathFollower : MonoBehaviour
     {
         sphereItem = GetComponent<BaseSphereItem>();
 
-        SetSpeed();
+        SetChaseState(false);
         distanceTravelled = 0.1f;
     }
 
@@ -72,10 +73,9 @@ public class PathFollower : MonoBehaviour
     private void MoveTo()
     {
         isChase = true;
-        SetSpeed(false);
+        isChaseForward = targetDistance > distanceTravelled;
 
-        int followCoef = targetDistance > distanceTravelled ? 1 : -1;
-        currentSpeed = currentSpeed * followCoef;
+        SetChaseState(false);
     }
 
     public void SetMoveDistance(float newDistance)
@@ -106,7 +106,9 @@ public class PathFollower : MonoBehaviour
             if (tempDefaultSpeed != followSpeed)
             {
                 tempDefaultSpeed = followSpeed;
-                currentSpeed = followSpeed;
+
+                float coef = isMoveForward ? 1 : -1;
+                currentSpeed = followSpeed * coef;
             }
         }
     }
@@ -128,16 +130,16 @@ public class PathFollower : MonoBehaviour
         }
         else
         {
-            distanceTravelled += currentSpeed * Time.deltaTime;
+            float coef = isChaseForward ? 1 : -1;
+            distanceTravelled += chaseSpeed * coef * Time.deltaTime;
 
             if (Mathf.RoundToInt(distanceTravelled) == Mathf.RoundToInt(targetDistance))
             {
-                isChase = false;
-                SetSpeed();
+                SetChaseState(false);
             }
         }
 
-        if (currentSpeed > 0)
+        if (isMoveForward)
         {
             if (distanceTravelled >= pathCreator.path.length - 0.1f)
             {
@@ -157,21 +159,24 @@ public class PathFollower : MonoBehaviour
 
                 float coef = isMoveForward ? 1 : -1;
                 currentSpeed = followSpeed * coef;
+                Debug.Log($"Coef: {coef} | Speed: {currentSpeed}");
 
                 Debug.Log("Start");
             }
         }
 
-        distanceTravelled = Mathf.Clamp(distanceTravelled, 0.05f, pathCreator.path.length - 0.05f);
+        distanceTravelled = Mathf.Clamp(distanceTravelled, 0.025f, pathCreator.path.length - 0.25f);
         transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
     }
 
-    private void SetSpeed(bool isFollow = true)
+    private void SetChaseState(bool chaseState)
     {
-        if (isFollow)
+        if (!chaseState)
             currentSpeed = followSpeed;
         else
             currentSpeed = chaseSpeed;
+
+        isChase = chaseState;
     }
 }

@@ -2431,9 +2431,11 @@ MonoBehaviour:
   pathController: {fileID: 0}
   distanceTravelled: 0
   isMove: 0
-  followSpeed: 2
-  targetDistance: 10
-  chaseSpeed: 3
+  currentSpeed: 0
+  isMoveForward: 1
+  followSpeed: 10
+  chaseSpeed: 7
+  targetDistance: 7.5
   isChase: 0
 --- !u!135 &8847969450709083387
 SphereCollider:

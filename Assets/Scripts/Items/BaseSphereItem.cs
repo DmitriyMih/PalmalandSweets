@@ -35,14 +35,6 @@ public class BaseSphereItem : MonoBehaviour
         }
     }
 
-    //public void SetRotationSpeed(float newRotationSpeed = -1f)
-    //{
-    //    if (newRotationSpeed == -1f)
-    //        currentRotationSpeed = defaultRotationSpeed;
-    //    else
-    //        currentRotationSpeed = newRotationSpeed;
-    //}
-
     public void AddFollower(PathFollower pathFollower)
     {
         this.pathFollower = pathFollower;
