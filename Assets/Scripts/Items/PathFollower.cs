@@ -75,7 +75,7 @@ public class PathFollower : MonoBehaviour
         isChase = true;
         isChaseForward = targetDistance > distanceTravelled;
 
-        SetChaseState(false);
+        SetChaseState(true);
     }
 
     public void SetMoveDistance(float newDistance)
@@ -101,6 +101,9 @@ public class PathFollower : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            MoveTo();
+
         if (!isChase)
         {
             if (tempDefaultSpeed != followSpeed)
