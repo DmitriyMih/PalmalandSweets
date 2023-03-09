@@ -93,6 +93,9 @@ public class PathFollower : MonoBehaviour
     public void ChangeDirection(bool newDirection)
     {
         isMoveDirectionForward = newDirection;
+
+        float coef = isMoveDirectionForward ? 1 : -1;
+        currentSpeed = followSpeed * coef;
     }
 
     public void SetMoveDistance(float newDistance)
@@ -161,9 +164,12 @@ public class PathFollower : MonoBehaviour
 
         if (isMoveDirectionForward)
         {
-            if (distanceTravelled >= Mathf.RoundToInt(pathCreator.path.length) - 1)
+            if (distanceTravelled > Mathf.RoundToInt(pathCreator.path.length) - 0.5)
             {
                 isMoveDirectionForward = false;
+
+                if (pathController != null)
+                    pathController.ChangeMoveDirection(isMoveDirectionForward);
 
                 float coef = isMoveDirectionForward ? 1 : -1;
                 currentSpeed = followSpeed * coef;
@@ -173,9 +179,12 @@ public class PathFollower : MonoBehaviour
         }
         else
         {
-            if (distanceTravelled < 1f)
+            if (distanceTravelled < 0.5f)
             {
                 isMoveDirectionForward = true;
+
+                if (pathController != null)
+                    pathController.ChangeMoveDirection(isMoveDirectionForward);
 
                 float coef = isMoveDirectionForward ? 1 : -1;
                 currentSpeed = followSpeed * coef;
@@ -185,7 +194,7 @@ public class PathFollower : MonoBehaviour
             }
         }
 
-        distanceTravelled = Mathf.Clamp(distanceTravelled, 0, Mathf.RoundToInt(pathCreator.path.length) - 1);
+        distanceTravelled = Mathf.Clamp(distanceTravelled, 0.5f, Mathf.RoundToInt(pathCreator.path.length) - 0.5f);
         transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
     }

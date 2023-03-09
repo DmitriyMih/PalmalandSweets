@@ -25,7 +25,28 @@ public class PathController : MonoBehaviour
         for (int i = 0; i < itemsList.Count; i++)
         {
             itemsList[i].SetDistanceTravelled(itemsList.Count - i);
+            itemsList[i].ChangePathController(this);
             itemsList[i].SetIndex(i + 1);
+        }
+    }
+
+    public void ChangeMoveDirection(bool forwardDirection)
+    {
+        if (forwardDirection)
+        {
+            for (int i = 0; i < itemsList.Count; i++)
+            {
+                itemsList[i].SetDistanceTravelled(itemsList.Count - i - 0.5f);
+                itemsList[i].ChangeDirection(forwardDirection);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < itemsList.Count; i++)
+            {
+                itemsList[i].SetDistanceTravelled(itemsList[0].GetDistanceTravelled() - i);
+                itemsList[i].ChangeDirection(forwardDirection);
+            }
         }
     }
 
