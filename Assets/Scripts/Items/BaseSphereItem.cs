@@ -30,10 +30,11 @@ public class BaseSphereItem : MonoBehaviour
             if (bodyTransform != null)
             {
                 float rotationSpeed = pathFollower == null ? this.defaultRotationSpeed : pathFollower.CurrentSpeed;
-                bodyTransform.transform.Rotate(rotationDirection, rotationSpeed);
+                bodyTransform.transform.Rotate(rotationDirection, rotationSpeed);        
             }
         }
     }
+
 
     public void AddFollower(PathFollower pathFollower)
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class PathFollower : MonoBehaviour
 
     [Space(5)]
     [SerializeField] private float currentSpeed;
-    [SerializeField] private bool isMoveForward = true;
+    [SerializeField] private bool isMoveDirectionForward = true;
 
     [Space(5), Header("Follow")]
     [SerializeField, Range(0, 10)] private float followSpeed = 1f;
@@ -64,9 +65,14 @@ public class PathFollower : MonoBehaviour
         return distanceTravelled;
     }
 
-    public void MoveToNewDistance(float newDistance)
+    public void SetDistanceTravelled(float newTravelledValue)
     {
-        //StartCoroutine(MoveTo(newDistance));
+        distanceTravelled = newTravelledValue;
+    }
+
+    public void MoveToNewDistance(PathFollower targetPathFollower, float offcet)
+    {
+        
     }
 
     [ContextMenu("Move To")]
@@ -76,6 +82,17 @@ public class PathFollower : MonoBehaviour
         isChaseForward = targetDistance > distanceTravelled;
 
         SetChaseState(true);
+    }
+
+    [SerializeField] private int index;
+    public void SetIndex(int newIndex)
+    {
+        index = newIndex;
+    }
+
+    public void ChangeDirection(bool newDirection)
+    {
+        isMoveDirectionForward = newDirection;
     }
 
     public void SetMoveDistance(float newDistance)
@@ -110,7 +127,7 @@ public class PathFollower : MonoBehaviour
             {
                 tempDefaultSpeed = followSpeed;
 
-                float coef = isMoveForward ? 1 : -1;
+                float coef = isMoveDirectionForward ? 1 : -1;
                 currentSpeed = followSpeed * coef;
             }
         }
@@ -128,7 +145,7 @@ public class PathFollower : MonoBehaviour
 
         if (!isChase)
         {
-            float coef = isMoveForward ? 1 : -1;
+            float coef = isMoveDirectionForward ? 1 : -1;
             distanceTravelled += followSpeed * coef * Time.deltaTime;
         }
         else
@@ -142,13 +159,13 @@ public class PathFollower : MonoBehaviour
             }
         }
 
-        if (isMoveForward)
+        if (isMoveDirectionForward)
         {
-            if (distanceTravelled >= pathCreator.path.length - 0.1f)
+            if (distanceTravelled >= Mathf.RoundToInt(pathCreator.path.length) - 1)
             {
-                isMoveForward = false;
+                isMoveDirectionForward = false;
 
-                float coef = isMoveForward ? 1 : -1;
+                float coef = isMoveDirectionForward ? 1 : -1;
                 currentSpeed = followSpeed * coef;
 
                 Debug.Log("End");
@@ -156,11 +173,11 @@ public class PathFollower : MonoBehaviour
         }
         else
         {
-            if (distanceTravelled < 0.1f)
+            if (distanceTravelled < 1f)
             {
-                isMoveForward = true;
+                isMoveDirectionForward = true;
 
-                float coef = isMoveForward ? 1 : -1;
+                float coef = isMoveDirectionForward ? 1 : -1;
                 currentSpeed = followSpeed * coef;
                 Debug.Log($"Coef: {coef} | Speed: {currentSpeed}");
 
@@ -168,7 +185,7 @@ public class PathFollower : MonoBehaviour
             }
         }
 
-        distanceTravelled = Mathf.Clamp(distanceTravelled, 0.025f, pathCreator.path.length - 0.25f);
+        distanceTravelled = Mathf.Clamp(distanceTravelled, 0, Mathf.RoundToInt(pathCreator.path.length) - 1);
         transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
     }

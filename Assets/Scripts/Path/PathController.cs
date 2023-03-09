@@ -17,6 +17,16 @@ public class PathController : MonoBehaviour
     private void Awake()
     {
         pathCreator = GetComponent<PathCreator>();
+        DebugInitializationList();
+    }
+
+    private void DebugInitializationList()
+    {
+        for (int i = 0; i < itemsList.Count; i++)
+        {
+            itemsList[i].SetDistanceTravelled(itemsList.Count - i);
+            itemsList[i].SetIndex(i + 1);
+        }
     }
 
     private void Update()
@@ -61,7 +71,7 @@ public class PathController : MonoBehaviour
 
                 for (int i = 0; i < forwardItems.Length; i++)
                 {
-                    forwardItems[i].MoveToNewDistance(newItem.GetDistanceTravelled() + (i * 1f));
+                    forwardItems[i].MoveToNewDistance(itemInList, (i * 1f));
                 }
 
             }
