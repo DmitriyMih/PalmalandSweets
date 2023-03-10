@@ -26,7 +26,7 @@ public class Distributor : MonoBehaviour
         currentSpawnTime = maxSpawnTime;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (currentSpawnCount <= 0 || pathController == null || spawnPoint == null)
             return;

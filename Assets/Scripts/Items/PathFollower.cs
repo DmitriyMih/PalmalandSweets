@@ -194,7 +194,7 @@ public class PathFollower : MonoBehaviour
             }
         }
 
-        distanceTravelled = Mathf.Clamp(distanceTravelled, 0.5f, Mathf.RoundToInt(pathCreator.path.length) - 0.5f);
+        distanceTravelled = Mathf.Clamp(distanceTravelled, 0.1f, Mathf.RoundToInt(pathCreator.path.length) - 0.1f);
         transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
     }

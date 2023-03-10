@@ -17,6 +17,10 @@ public class PathController : MonoBehaviour
     private void Awake()
     {
         pathCreator = GetComponent<PathCreator>();
+    }
+
+    private void Start()
+    {
         DebugInitializationList();
     }
 
@@ -24,9 +28,12 @@ public class PathController : MonoBehaviour
     {
         for (int i = 0; i < itemsList.Count; i++)
         {
-            itemsList[i].SetDistanceTravelled(itemsList.Count - i);
+            if (itemsList[i] == null)
+                continue;
+
             itemsList[i].ChangePathController(this);
-            itemsList[i].SetIndex(i + 1);
+            itemsList[i].SetDistanceTravelled(itemsList.Count - i);
+            itemsList[i].SetIndex(i);
         }
     }
 
@@ -36,6 +43,9 @@ public class PathController : MonoBehaviour
         {
             for (int i = 0; i < itemsList.Count; i++)
             {
+                if (itemsList[i] == null)
+                    continue;
+
                 itemsList[i].SetDistanceTravelled(itemsList.Count - i - 0.5f);
                 itemsList[i].ChangeDirection(forwardDirection);
             }
@@ -44,6 +54,9 @@ public class PathController : MonoBehaviour
         {
             for (int i = 0; i < itemsList.Count; i++)
             {
+                if (itemsList[i] == null)
+                    continue;
+
                 itemsList[i].SetDistanceTravelled(itemsList[0].GetDistanceTravelled() - i);
                 itemsList[i].ChangeDirection(forwardDirection);
             }
@@ -87,13 +100,13 @@ public class PathController : MonoBehaviour
         {
             if (itemsList.Count > 1)
             {
-                PathFollower[] forwardItems = new PathFollower[0];
-                itemsList.CopyTo(forwardItems, index);
+                //PathFollower[] forwardItems = new PathFollower[0];
+                ////itemsList.CopyTo(forwardItems, index);
 
-                for (int i = 0; i < forwardItems.Length; i++)
-                {
-                    forwardItems[i].MoveToNewDistance(itemInList, (i * 1f));
-                }
+                //for (int i = 0; i < forwardItems.Length; i++)
+                //{
+                //    forwardItems[i].MoveToNewDistance(itemInList, (i * 1f));
+                //}
 
             }
         }

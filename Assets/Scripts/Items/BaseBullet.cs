@@ -39,10 +39,10 @@ public class BaseBullet : MonoBehaviour
 
         if (connectedPathFollower.GetPathController() != null)
         {
-            if (this.pathFollower != null)
-                this.pathFollower.ChangePathController(connectedPathFollower.GetPathController());
+            //if (this.pathFollower != null)
+                //this.pathFollower.ChangePathController(connectedPathFollower.GetPathController());
 
-            connectedPathFollower.GetPathController().AddWithOffset(connectedPathFollower, connectedPathFollower, connectDirection);
+            //connectedPathFollower.GetPathController().AddWithOffset(connectedPathFollower, connectedPathFollower, connectDirection);
         }
     }
 
@@ -51,7 +51,8 @@ public class BaseBullet : MonoBehaviour
         GetComponent<SphereCollider>().isTrigger = false;
 
         Destroy(GetComponent<Rigidbody>());
-        Destroy(this);
+        //Destroy(this);
+        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

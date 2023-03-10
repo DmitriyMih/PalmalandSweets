@@ -8,7 +8,9 @@ public class CannonController : MonoBehaviour
     [SerializeField] private Transform towerTransform;
 
     private Vector3 directionTarget;
-    [SerializeField] private bool IsInput;
+
+    [SerializeField] private bool lockTowerOnXZ = true;
+    [SerializeField, Space(5)] private bool IsTraking;
    
     [Header("Shoot Settings")]
     [SerializeField] private Transform muzzlePoint;
@@ -24,7 +26,7 @@ public class CannonController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            IsInput = true;
+            IsTraking = true;
 
             Vector2 mousePosition = new Vector2(Mathf.Clamp(Input.mousePosition.x, 0, Screen.width), Mathf.Clamp(Input.mousePosition.y, 0, Screen.height));
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
@@ -36,19 +38,22 @@ public class CannonController : MonoBehaviour
         }
         else
         {
-            if (IsInput)
+            if (IsTraking)
                 Shoot();
 
-            IsInput = false;
+            IsTraking = false;
         }
     }
 
     private void TowerRotation()
     {
-        if (!IsInput || towerTransform == null)
+        if (!IsTraking || towerTransform == null)
             return;
 
         towerTransform.rotation = Quaternion.LookRotation(directionTarget);
+
+        if (lockTowerOnXZ)
+            towerTransform.eulerAngles = new Vector3(0f, towerTransform.transform.eulerAngles.y, 0f);
     }
 
     private void Shoot()
