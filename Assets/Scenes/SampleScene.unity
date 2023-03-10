@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 202133281}
   - component: {fileID: 202133280}
   - component: {fileID: 202133279}
+  - component: {fileID: 202133283}
   m_Layer: 2
   m_Name: Sphere Item (1)
   m_TagString: Untagged
@@ -185,15 +186,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
+  CurrentRotationSpeed: 1
   distanceTravelled: 0
   isMove: 0
   currentSpeed: 0
-  isMoveDirectionForward: 1
   followSpeed: 10
-  chaseSpeed: 7
-  targetDistance: 7.5
-  isChase: 0
-  isChaseForward: 0
   index: 0
 --- !u!4 &202133282
 Transform:
@@ -211,6 +208,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &202133283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202133278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb9b9eda225e5f4cbcc3598d95ce44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathFollower: {fileID: 0}
+  isMoveDirectionForward: 1
+  childObjects:
+  - {fileID: 1142512164}
+  - {fileID: 205469689}
+  - {fileID: 958981636}
+  - {fileID: 2027053361}
 --- !u!1 &205469686
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,15 +289,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
+  CurrentRotationSpeed: 1
   distanceTravelled: 0
   isMove: 0
   currentSpeed: 0
-  isMoveDirectionForward: 1
   followSpeed: 10
-  chaseSpeed: 7
-  targetDistance: 7.5
-  isChase: 0
-  isChaseForward: 0
   index: 0
 --- !u!4 &205469690
 Transform:
@@ -992,15 +1004,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
+  CurrentRotationSpeed: 1
   distanceTravelled: 0
   isMove: 0
   currentSpeed: 0
-  isMoveDirectionForward: 1
   followSpeed: 10
-  chaseSpeed: 7
-  targetDistance: 7.5
-  isChase: 0
-  isChaseForward: 0
   index: 0
 --- !u!4 &958981637
 Transform:
@@ -1236,7 +1244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1140220378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,7 +1386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distributor: {fileID: 1074727295}
-  moveSpeed: 1
+  followingSpeed: 1
   itemsList: []
 --- !u!114 &1140220381
 MonoBehaviour:
@@ -1466,15 +1474,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
+  CurrentRotationSpeed: 1
   distanceTravelled: 0
   isMove: 0
   currentSpeed: 0
-  isMoveDirectionForward: 1
   followSpeed: 10
-  chaseSpeed: 7
-  targetDistance: 7.5
-  isChase: 0
-  isChaseForward: 0
   index: 0
 --- !u!4 &1142512165
 Transform:
@@ -1714,7 +1718,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
+  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1909,7 +1913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distributor: {fileID: 0}
-  moveSpeed: 5
+  followingSpeed: 1
   itemsList:
   - {fileID: 202133281}
   - {fileID: 1142512164}
@@ -2013,103 +2017,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1392709003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1392709007}
-  - component: {fileID: 1392709006}
-  - component: {fileID: 1392709005}
-  - component: {fileID: 1392709004}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1392709004
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392709003}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1392709005
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392709003}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1392709006
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392709003}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1392709007
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392709003}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.75, y: 0, z: -6.25}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1494419420
 GameObject:
@@ -2723,15 +2630,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
+  CurrentRotationSpeed: 1
   distanceTravelled: 0
   isMove: 0
   currentSpeed: 0
-  isMoveDirectionForward: 1
   followSpeed: 10
-  chaseSpeed: 7
-  targetDistance: 7.5
-  isChase: 0
-  isChaseForward: 0
   index: 0
 --- !u!4 &2027053362
 Transform:

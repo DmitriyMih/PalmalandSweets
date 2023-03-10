@@ -10,8 +10,11 @@ public class PathFollower : MonoBehaviour
     [SerializeField] private PathCreator pathCreator;
     [SerializeField] private PathController pathController;
 
-    /*[SerializeField] */
     private BaseSphereItem sphereItem;
+
+    [Header("Child Settings")]
+    [SerializeField] private float currentRotationSpeed = 1f;
+    public float CurrentRotationSpeed => currentRotationSpeed;
 
     [Space(10), Header("Move Settings")]
     [SerializeField] private float distanceTravelled;
@@ -19,27 +22,27 @@ public class PathFollower : MonoBehaviour
 
     [Space(5)]
     [SerializeField] private float currentSpeed;
-    [SerializeField] private bool isMoveDirectionForward = true;
+    //[SerializeField] private bool isMoveDirectionForward = true;
 
     [Space(5), Header("Follow")]
     [SerializeField, Range(0, 10)] private float followSpeed = 1f;
     private float tempDefaultSpeed;
 
-    [Space(5), Header("Chase")]
-    [SerializeField, Range(0, 10)] private float chaseSpeed = 3f;
+    //[Space(5), Header("Chase")]
+    //[SerializeField, Range(0, 10)] private float chaseSpeed = 3f;
 
-    [SerializeField] private float targetDistance;
-    [SerializeField] private bool isChase;
-    [SerializeField] private bool isChaseForward;
+    //[SerializeField] private float targetDistance;
+    //[SerializeField] private bool isChase;
+    //[SerializeField] private bool isChaseForward;
 
-    public float CurrentSpeed => currentSpeed;
+    //public float CurrentSpeed => currentSpeed;
     public bool IsMove => isMove;
 
     private void Awake()
     {
         sphereItem = GetComponent<BaseSphereItem>();
 
-        SetChaseState(false);
+        //SetChaseState(false);
         distanceTravelled = 0.1f;
     }
 
@@ -72,17 +75,23 @@ public class PathFollower : MonoBehaviour
 
     public void MoveToNewDistance(PathFollower targetPathFollower, float offcet)
     {
-        
+
     }
 
-    [ContextMenu("Move To")]
-    private void MoveTo()
+    [ContextMenu("Make Guides")]
+    public void MakeGuides()
     {
-        isChase = true;
-        isChaseForward = targetDistance > distanceTravelled;
-
-        SetChaseState(true);
+        GuideFollower guideFollower = gameObject.AddComponent<GuideFollower>();
     }
+
+    //[ContextMenu("Move To")]
+    //private void MoveTo()
+    //{
+    //    isChase = true;
+    //    isChaseForward = targetDistance > distanceTravelled;
+
+    //    SetChaseState(true);
+    //}
 
     [SerializeField] private int index;
     public void SetIndex(int newIndex)
@@ -90,13 +99,13 @@ public class PathFollower : MonoBehaviour
         index = newIndex;
     }
 
-    public void ChangeDirection(bool newDirection)
-    {
-        isMoveDirectionForward = newDirection;
+    //public void ChangeDirection(bool newDirection)
+    //{
+    //    isMoveDirectionForward = newDirection;
 
-        float coef = isMoveDirectionForward ? 1 : -1;
-        currentSpeed = followSpeed * coef;
-    }
+    //    float coef = isMoveDirectionForward ? 1 : -1;
+    //    currentSpeed = followSpeed * coef;
+    //}
 
     public void SetMoveDistance(float newDistance)
     {
@@ -121,22 +130,21 @@ public class PathFollower : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            MoveTo();
+        currentRotationSpeed = isMove ? currentSpeed : 0f;
 
-        if (!isChase)
-        {
-            if (tempDefaultSpeed != followSpeed)
-            {
-                tempDefaultSpeed = followSpeed;
+        //if (!isChase)
+        //{
+        //if (tempDefaultSpeed != followSpeed)
+        //    {
+        //        tempDefaultSpeed = followSpeed;
 
-                float coef = isMoveDirectionForward ? 1 : -1;
-                currentSpeed = followSpeed * coef;
-            }
-        }
+        //        float coef = isMoveDirectionForward ? 1 : -1;
+        //        currentSpeed = followSpeed * coef;
+        //    }
+        //}
     }
 
-    private void FixedUpdate()
+    public void Move(float speed = -1f)
     {
         if (pathCreator == null)
         {
@@ -146,66 +154,74 @@ public class PathFollower : MonoBehaviour
         else
             isMove = true;
 
-        if (!isChase)
-        {
-            float coef = isMoveDirectionForward ? 1 : -1;
-            distanceTravelled += followSpeed * coef * Time.deltaTime;
-        }
-        else
-        {
-            float coef = isChaseForward ? 1 : -1;
-            distanceTravelled += chaseSpeed * coef * Time.deltaTime;
+        //  if not cheese, set default speed
+        if (speed == -1f)
+            speed = pathController == null ? 1f : pathController.FollowingSpeed;
 
-            if (Mathf.RoundToInt(distanceTravelled) == Mathf.RoundToInt(targetDistance))
-            {
-                SetChaseState(false);
-            }
-        }
+        currentSpeed = speed;
+        distanceTravelled += currentSpeed * Time.deltaTime;
 
-        if (isMoveDirectionForward)
-        {
-            if (distanceTravelled > Mathf.RoundToInt(pathCreator.path.length) - 0.5)
-            {
-                isMoveDirectionForward = false;
 
-                if (pathController != null)
-                    pathController.ChangeMoveDirection(isMoveDirectionForward);
+        //if (!isChase)
+        //{
+        //    float coef = isMoveDirectionForward ? 1 : -1;
+        //    distanceTravelled += followSpeed * coef * Time.deltaTime;
+        //}
+        //else
+        //{
+        //    float coef = isChaseForward ? 1 : -1;
+        //    distanceTravelled += chaseSpeed * coef * Time.deltaTime;
 
-                float coef = isMoveDirectionForward ? 1 : -1;
-                currentSpeed = followSpeed * coef;
+        //    if (Mathf.RoundToInt(distanceTravelled) == Mathf.RoundToInt(targetDistance))
+        //    {
+        //        SetChaseState(false);
+        //    }
+        //}
 
-                Debug.Log("End");
-            }
-        }
-        else
-        {
-            if (distanceTravelled < 0.5f)
-            {
-                isMoveDirectionForward = true;
+        //if (isMoveDirectionForward)
+        //{
+        //    if (distanceTravelled > Mathf.RoundToInt(pathCreator.path.length) - 0.5)
+        //    {
+        //        isMoveDirectionForward = false;
 
-                if (pathController != null)
-                    pathController.ChangeMoveDirection(isMoveDirectionForward);
+        //        if (pathController != null)
+        //            pathController.ChangeMoveDirection(isMoveDirectionForward);
 
-                float coef = isMoveDirectionForward ? 1 : -1;
-                currentSpeed = followSpeed * coef;
-                Debug.Log($"Coef: {coef} | Speed: {currentSpeed}");
+        //        float coef = isMoveDirectionForward ? 1 : -1;
+        //        currentSpeed = followSpeed * coef;
 
-                Debug.Log("Start");
-            }
-        }
+        //        Debug.Log("End");
+        //    }
+        //}
+        //else
+        //{
+        //    if (distanceTravelled < 0.5f)
+        //    {
+        //        isMoveDirectionForward = true;
 
-        distanceTravelled = Mathf.Clamp(distanceTravelled, 0.1f, Mathf.RoundToInt(pathCreator.path.length) - 0.1f);
+        //        //if (pathController != null)
+        //        //    pathController.ChangeMoveDirection(isMoveDirectionForward);
+
+        //        float coef = isMoveDirectionForward ? 1 : -1;
+        //        currentSpeed = followSpeed * coef;
+        //        Debug.Log($"Coef: {coef} | Speed: {currentSpeed}");
+
+        //        Debug.Log("Start");
+        //    }
+        //}
+
+        //distanceTravelled = Mathf.Clamp(distanceTravelled, 0.1f, Mathf.RoundToInt(pathCreator.path.length) - 0.1f);
         transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
     }
 
-    private void SetChaseState(bool chaseState)
-    {
-        if (!chaseState)
-            currentSpeed = followSpeed;
-        else
-            currentSpeed = chaseSpeed;
+    //private void SetChaseState(bool chaseState)
+    //{
+    //    if (!chaseState)
+    //        currentSpeed = followSpeed;
+    //    else
+    //        currentSpeed = chaseSpeed;
 
-        isChase = chaseState;
-    }
+    //    isChase = chaseState;
+    //}
 }

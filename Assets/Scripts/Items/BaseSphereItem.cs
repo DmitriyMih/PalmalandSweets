@@ -29,7 +29,7 @@ public class BaseSphereItem : MonoBehaviour
         {
             if (bodyTransform != null)
             {
-                float rotationSpeed = pathFollower == null ? this.defaultRotationSpeed : pathFollower.CurrentSpeed;
+                float rotationSpeed = pathFollower == null ? this.defaultRotationSpeed : pathFollower.CurrentRotationSpeed;
                 bodyTransform.transform.Rotate(rotationDirection, rotationSpeed);        
             }
         }

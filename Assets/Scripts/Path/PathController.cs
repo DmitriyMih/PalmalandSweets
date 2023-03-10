@@ -9,7 +9,9 @@ public class PathController : MonoBehaviour
     [SerializeField] private Distributor distributor;
     private PathCreator pathCreator;
 
-    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float followingSpeed = 1f;
+    public float FollowingSpeed => followingSpeed;
+
     private float tempSpeed;
 
     [SerializeField] private List<PathFollower> itemsList = new List<PathFollower>();
@@ -37,38 +39,38 @@ public class PathController : MonoBehaviour
         }
     }
 
-    public void ChangeMoveDirection(bool forwardDirection)
-    {
-        if (forwardDirection)
-        {
-            for (int i = 0; i < itemsList.Count; i++)
-            {
-                if (itemsList[i] == null)
-                    continue;
+    //public void ChangeMoveDirection(bool forwardDirection)
+    //{
+    //    if (forwardDirection)
+    //    {
+    //        for (int i = 0; i < itemsList.Count; i++)
+    //        {
+    //            if (itemsList[i] == null)
+    //                continue;
 
-                itemsList[i].SetDistanceTravelled(itemsList.Count - i - 0.5f);
-                itemsList[i].ChangeDirection(forwardDirection);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < itemsList.Count; i++)
-            {
-                if (itemsList[i] == null)
-                    continue;
+    //            itemsList[i].SetDistanceTravelled(itemsList.Count - i - 0.5f);
+    //            //itemsList[i].ChangeDirection(forwardDirection);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        for (int i = 0; i < itemsList.Count; i++)
+    //        {
+    //            if (itemsList[i] == null)
+    //                continue;
 
-                itemsList[i].SetDistanceTravelled(itemsList[0].GetDistanceTravelled() - i);
-                itemsList[i].ChangeDirection(forwardDirection);
-            }
-        }
-    }
+    //            itemsList[i].SetDistanceTravelled(itemsList[0].GetDistanceTravelled() - i);
+    //            //itemsList[i].ChangeDirection(forwardDirection);
+    //        }
+    //    }
+    //}
 
     private void Update()
     {
-        if (tempSpeed != moveSpeed)
+        if (tempSpeed != followingSpeed)
         {
             UpdateItemsMoveSpeed();
-            tempSpeed = moveSpeed;
+            tempSpeed = followingSpeed;
         }
     }
 
@@ -80,14 +82,14 @@ public class PathController : MonoBehaviour
     private void UpdateItemsMoveSpeed()
     {
         if (distributor != null)
-            distributor.ChangeSpeedAcceleration(moveSpeed);
+            distributor.ChangeSpeedAcceleration(followingSpeed);
 
         for (int i = 0; i < itemsList.Count; i++)
         {
             if (itemsList[i] == null)
                 continue;
 
-            itemsList[i].ChangeMoveSpeed(moveSpeed);
+            itemsList[i].ChangeMoveSpeed(followingSpeed);
         }
     }
 
@@ -121,7 +123,7 @@ public class PathController : MonoBehaviour
         if (sphereItem == null)
             return;
 
-        sphereItem.ChangeMoveSpeed(moveSpeed);
+        sphereItem.ChangeMoveSpeed(followingSpeed);
         sphereItem.ChangePathController(this);
 
         if (index != -1)
