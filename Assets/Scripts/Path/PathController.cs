@@ -31,12 +31,13 @@ public class PathController : MonoBehaviour
     {
         for (int i = 0; i < itemsList.Count; i++)
         {
-            if (itemsList[i] == null)
+            PathFollower follower = itemsList[i];
+            if (follower == null)
                 continue;
 
-            itemsList[i].ChangePathController(this);
-            itemsList[i].SetDistanceTravelled(itemsList.Count - i);
-            itemsList[i].transform.parent = transform;
+            follower.transform.parent = transform;
+            follower.ChangePathController(this);
+            follower.SetStartDistance(itemsList.Count - i);
         }
 
         UpdateIndexes();
@@ -92,14 +93,40 @@ public class PathController : MonoBehaviour
 
         itemsList.AddRange(GetComponentsInChildren<PathFollower>());
 
+        if (itemsList[0].HasGuideFollower())
+            itemsList[0].AddGuides();
+
+        GuideFollower tempFollower = new GuideFollower();
+        List<PathFollower> tempGuideChilds = new List<PathFollower>();
+
+        //  Index updatings
+        //  Search for followers and guides
         for (int i = 0; i < itemsList.Count; i++)
         {
             PathFollower follower = itemsList[i];
-            follower.SetIndex(i);
 
+            follower.SetIndex(i);
+            follower.name = "Sphere Follower " + i;
+
+            //  Updating child objects of the guides
             if (follower.HasGuideFollower())
-                guideFollowers.Add(follower.GetGuideFollower());
+            {
+                GuideFollower currentFollower = follower.GetGuideFollower();
+                currentFollower.name = "Guide Follower " + guideFollowers.Count;
+
+                Debug.Log($"Find Follower: {currentFollower.name} | Temp Childs: {tempGuideChilds.Count}");
+
+                tempFollower.UpdateChilds(tempGuideChilds);
+                tempGuideChilds.Clear();
+
+                tempFollower = currentFollower;
+                guideFollowers.Add(currentFollower);
+            }
+            else
+                tempGuideChilds.Add(follower);
         }
+
+        tempFollower.UpdateChilds(tempGuideChilds);
     }
 
     #region Balls Behavior
@@ -147,7 +174,7 @@ public class PathController : MonoBehaviour
         sphereItem.ChangePathController(null);
         itemsList.Remove(sphereItem);
 
-        UpdateIndexes();    
+        UpdateIndexes();
     }
     #endregion
 }

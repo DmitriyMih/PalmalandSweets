@@ -7,7 +7,6 @@ using PathCreation;
 public class PathFollower : MonoBehaviour
 {
     [Header("Connect Settings")]
-    [SerializeField] private PathCreator pathCreator;
     [SerializeField] private PathController pathController;
     [SerializeField] private GuideFollower guideFollower;
 
@@ -34,7 +33,6 @@ public class PathFollower : MonoBehaviour
         sphereItem = GetComponent<BaseSphereItem>();
         guideFollower = GetComponent<GuideFollower>();
 
-        //SetChaseState(false);
         distanceTravelled = 0.1f;
     }
 
@@ -68,20 +66,32 @@ public class PathFollower : MonoBehaviour
     public bool HasGuideFollower()
     {
         return guideFollower;
-    } 
+    }
 
     public GuideFollower GetGuideFollower()
     {
         return guideFollower;
     }
 
-    public void SetDistanceTravelled(float newTravelledValue)
+    public void SetStartDistance(float newDistance)
     {
-        distanceTravelled = newTravelledValue;
+        distanceTravelled = newDistance;
+        SetDistanceTravelled();
+    }
+
+    private void SetDistanceTravelled()
+    {
+        if (HasPathController() && pathController.HasPathCreator())
+        {
+            PathCreator pathCreator = pathController.GetPathCreator();
+            transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
+            transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
+            Debug.Log("Set In: " + distanceTravelled);
+        }
     }
 
     [ContextMenu("Make Guides")]
-    public void MakeGuides()
+    public void AddGuides()
     {
         if (!HasGuideFollower())
             guideFollower = gameObject.AddComponent<GuideFollower>();
@@ -108,25 +118,14 @@ public class PathFollower : MonoBehaviour
         }
     }
 
-    public void SetMoveDistance(float newDistance)
-    {
-        distanceTravelled = newDistance;
-    }
-
     public void ChangePathController(PathController pathController)
     {
         this.pathController = pathController;
-        ChangePathCreator(pathController != null ? pathController.GetPathCreator() : null);
     }
 
     public void ChangeMoveSpeed(float moveSpeed)
     {
         followSpeed = moveSpeed;
-    }
-
-    private void ChangePathCreator(PathCreator pathCreator)
-    {
-        this.pathCreator = pathCreator;
     }
 
     private bool CheckIsMove()
@@ -144,12 +143,12 @@ public class PathFollower : MonoBehaviour
 
     private void Update()
     {
-        currentRotationSpeed = CheckIsMove()  ? currentSpeed : 0f;
+        currentRotationSpeed = CheckIsMove() ? currentSpeed : 0f;
     }
 
-    public void Move(float speed = -1f)
+    public void Move(float speed = 0)
     {
-        if (pathCreator == null)
+        if (!HasPathController() || !pathController.HasPathCreator())
         {
             isLocalMove = false;
             return;
@@ -157,8 +156,10 @@ public class PathFollower : MonoBehaviour
         else
             isLocalMove = true;
 
+        PathCreator pathCreator = pathController.GetPathCreator();
+
         //  if not cheese, set default speed
-        if (speed == -1f)
+        if (speed == 0)
             speed = CheckSpeed();
 
         currentSpeed = speed;

@@ -33,8 +33,7 @@ public class GuideFollower : MonoBehaviour
     {
         pathFollower = GetComponent<PathFollower>();
         renderer = GetComponentInChildren<Renderer>();
-        name = "Guide Follower";
-
+       
         if (renderer != null)
         {
             tempMaterial = renderer.material;
@@ -45,11 +44,9 @@ public class GuideFollower : MonoBehaviour
         }
     }
 
-    public void InitializationChilds(List<PathFollower> newChilds)
+    public void UpdateChilds(List<PathFollower> newChilds)
     {
-        if (newChilds.Count == 0)
-            return;
-
+        childObjects.Clear();
         childObjects.AddRange(newChilds);
     }
 
@@ -63,12 +60,14 @@ public class GuideFollower : MonoBehaviour
 
     private void Move()
     {
+        float defaultSpeed = 0;
+        
         if (pathFollower != null)
             pathFollower.Move();
 
         for (int i = 0; i < childObjects.Count; i++)
         {
-            childObjects[i].Move();
+            childObjects[i].Move(defaultSpeed);
         }
     }
 
