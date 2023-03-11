@@ -15,6 +15,7 @@ public class PathController : MonoBehaviour
     private float tempSpeed;
 
     [SerializeField] private List<PathFollower> itemsList = new List<PathFollower>();
+    [SerializeField] private List<GuideFollower> guideFollowers = new List<GuideFollower>();
 
     private void Awake()
     {
@@ -35,35 +36,31 @@ public class PathController : MonoBehaviour
 
             itemsList[i].ChangePathController(this);
             itemsList[i].SetDistanceTravelled(itemsList.Count - i);
-            itemsList[i].SetIndex(i);
+            itemsList[i].transform.parent = transform;
         }
+
+        UpdateIndexes();
     }
 
-    //public void ChangeMoveDirection(bool forwardDirection)
-    //{
-    //    if (forwardDirection)
-    //    {
-    //        for (int i = 0; i < itemsList.Count; i++)
-    //        {
-    //            if (itemsList[i] == null)
-    //                continue;
+    public PathCreator GetPathCreator()
+    {
+        return pathCreator;
+    }
 
-    //            itemsList[i].SetDistanceTravelled(itemsList.Count - i - 0.5f);
-    //            //itemsList[i].ChangeDirection(forwardDirection);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        for (int i = 0; i < itemsList.Count; i++)
-    //        {
-    //            if (itemsList[i] == null)
-    //                continue;
+    public bool HasPathCreator()
+    {
+        return pathCreator;
+    }
 
-    //            itemsList[i].SetDistanceTravelled(itemsList[0].GetDistanceTravelled() - i);
-    //            //itemsList[i].ChangeDirection(forwardDirection);
-    //        }
-    //    }
-    //}
+    public bool HasElementInList(PathFollower pathFollower)
+    {
+        return itemsList.Contains(pathFollower);
+    }
+
+    public int GetIndex(PathFollower pathFollower)
+    {
+        return itemsList.IndexOf(pathFollower);
+    }
 
     private void Update()
     {
@@ -72,11 +69,6 @@ public class PathController : MonoBehaviour
             UpdateItemsMoveSpeed();
             tempSpeed = followingSpeed;
         }
-    }
-
-    public PathCreator GetPathCreator()
-    {
-        return pathCreator;
     }
 
     private void UpdateItemsMoveSpeed()
@@ -93,6 +85,24 @@ public class PathController : MonoBehaviour
         }
     }
 
+    private void UpdateIndexes()
+    {
+        itemsList.Clear();
+        guideFollowers.Clear();
+
+        itemsList.AddRange(GetComponentsInChildren<PathFollower>());
+
+        for (int i = 0; i < itemsList.Count; i++)
+        {
+            PathFollower follower = itemsList[i];
+            follower.SetIndex(i);
+
+            if (follower.HasGuideFollower())
+                guideFollowers.Add(follower.GetGuideFollower());
+        }
+    }
+
+    #region Balls Behavior
     public void AddWithOffset(PathFollower newItem, PathFollower itemInList, Direction direction)
     {
         int index = itemsList.IndexOf(itemInList);
@@ -100,17 +110,7 @@ public class PathController : MonoBehaviour
 
         if (direction == Direction.Forward)
         {
-            if (itemsList.Count > 1)
-            {
-                //PathFollower[] forwardItems = new PathFollower[0];
-                ////itemsList.CopyTo(forwardItems, index);
 
-                //for (int i = 0; i < forwardItems.Length; i++)
-                //{
-                //    forwardItems[i].MoveToNewDistance(itemInList, (i * 1f));
-                //}
-
-            }
         }
         else
         {
@@ -134,8 +134,9 @@ public class PathController : MonoBehaviour
         else
             itemsList.Add(sphereItem);
 
-        sphereItem.SetMoveDistance(0f);
         sphereItem.transform.parent = transform;
+
+        UpdateIndexes();
     }
 
     public void RemoveSphereItem(PathFollower sphereItem)
@@ -145,5 +146,8 @@ public class PathController : MonoBehaviour
 
         sphereItem.ChangePathController(null);
         itemsList.Remove(sphereItem);
+
+        UpdateIndexes();    
     }
+    #endregion
 }
