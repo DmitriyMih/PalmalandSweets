@@ -46,10 +46,9 @@ public class GuideFollower : MonoBehaviour
 
     public void UpdateChilds(List<PathFollower> newChilds)
     {
-        SetGuideFollower(null);
         childObjects.Clear();
 
-        childObjects.AddRange(newChilds);
+        childObjects = new List<PathFollower>(newChilds);
         SetGuideFollower(this);
     }
 

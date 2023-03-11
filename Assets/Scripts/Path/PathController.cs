@@ -62,9 +62,9 @@ public class PathController : MonoBehaviour
     public int GetFollowerIndex(PathFollower pathFollower)
     {
         return itemsList.IndexOf(pathFollower);
-    } 
+    }
     #endregion
-    
+
     #region Guiders
     public bool HasGuiderInList(GuideFollower guideFollower)
     {
@@ -120,7 +120,7 @@ public class PathController : MonoBehaviour
         if (itemsList[0].HasGuideFollower())
             itemsList[0].AddGuides();
 
-        GuideFollower tempFollower = new GuideFollower();
+        GuideFollower tempFollower = itemsList[0].GetGuideFollower();
         List<PathFollower> tempGuideChilds = new List<PathFollower>();
 
         //  Index updatings
@@ -138,7 +138,7 @@ public class PathController : MonoBehaviour
                 GuideFollower currentFollower = follower.GetGuideFollower();
                 currentFollower.name = "Guide Follower " + guideFollowers.Count;
 
-                Debug.Log($"Find Follower: {currentFollower.name} | Temp Childs: {tempGuideChilds.Count}");
+                //Debug.Log($"Find Follower: {currentFollower.name} | Temp Childs: {tempGuideChilds.Count}");
 
                 tempFollower.UpdateChilds(tempGuideChilds);
                 tempGuideChilds.Clear();
@@ -150,7 +150,8 @@ public class PathController : MonoBehaviour
                 tempGuideChilds.Add(follower);
         }
 
-        tempFollower.UpdateChilds(tempGuideChilds);
+        if (tempFollower != null)
+            tempFollower.UpdateChilds(tempGuideChilds);
     }
 
     #region Balls Behavior

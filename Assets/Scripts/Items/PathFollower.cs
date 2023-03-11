@@ -34,6 +34,7 @@ public class PathFollower : MonoBehaviour
     {
         sphereItem = GetComponent<BaseSphereItem>();
         currentGuide = GetComponent<GuideFollower>();
+        parentGuideFollower = currentGuide;
 
         distanceTravelled = 0.1f;
     }
@@ -94,10 +95,13 @@ public class PathFollower : MonoBehaviour
     [ContextMenu("Make Guides")]
     public void AddGuides()
     {
-        if (!HasGuideFollower()) 
-            currentGuide = gameObject.AddComponent<GuideFollower>();
+        if (!HasGuideFollower())
+        {
+            currentGuide = gameObject.AddComponent<GuideFollower>().GetComponent<GuideFollower>();
 
-        parentGuideFollower = currentGuide;
+            Debug.Log(currentGuide.name);
+            parentGuideFollower = currentGuide;
+        }
     }
 
     public void SetParentGuideFollower(GuideFollower parentGuideFollower)
