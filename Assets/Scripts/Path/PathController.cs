@@ -37,7 +37,7 @@ public class PathController : MonoBehaviour
 
             follower.transform.parent = transform;
             follower.ChangePathController(this);
-            follower.SetStartDistance(itemsList.Count - i);
+            follower.SetMoveDistance(itemsList.Count - i);
         }
 
         UpdateIndexes();
@@ -53,15 +53,39 @@ public class PathController : MonoBehaviour
         return pathCreator;
     }
 
-    public bool HasElementInList(PathFollower pathFollower)
+    #region Followers
+    public bool HasFollowerInList(PathFollower pathFollower)
     {
         return itemsList.Contains(pathFollower);
     }
 
-    public int GetIndex(PathFollower pathFollower)
+    public int GetFollowerIndex(PathFollower pathFollower)
     {
         return itemsList.IndexOf(pathFollower);
+    } 
+    #endregion
+    
+    #region Guiders
+    public bool HasGuiderInList(GuideFollower guideFollower)
+    {
+        return guideFollowers.Contains(guideFollower);
     }
+
+    public int GetGuiderIndex(GuideFollower guideFollower)
+    {
+        return guideFollowers.IndexOf(guideFollower);
+    }
+
+    public GuideFollower GetGuiderByIndex(int index)
+    {
+        return (index > 0 || index < guideFollowers.Count) ? guideFollowers[index] : null;
+    }
+
+    public int GetGuidersCount()
+    {
+        return guideFollowers.Count;
+    }
+    #endregion
 
     private void Update()
     {

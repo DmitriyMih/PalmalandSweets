@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d5592373c75e54c84d4ffc57d35224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
   guideFollower: {fileID: 0}
   currentRotationSpeed: 1
@@ -290,7 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d5592373c75e54c84d4ffc57d35224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
   guideFollower: {fileID: 0}
   currentRotationSpeed: 1
@@ -1006,7 +1004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d5592373c75e54c84d4ffc57d35224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
   guideFollower: {fileID: 0}
   currentRotationSpeed: 1
@@ -1478,7 +1475,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d5592373c75e54c84d4ffc57d35224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
   guideFollower: {fileID: 0}
   currentRotationSpeed: 1
@@ -2370,7 +2366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d5592373c75e54c84d4ffc57d35224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
   guideFollower: {fileID: 0}
   currentRotationSpeed: 1
@@ -2837,7 +2832,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d5592373c75e54c84d4ffc57d35224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 1356366508}
   pathController: {fileID: 0}
   guideFollower: {fileID: 0}
   currentRotationSpeed: 1

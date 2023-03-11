@@ -8,7 +8,9 @@ public class PathFollower : MonoBehaviour
 {
     [Header("Connect Settings")]
     [SerializeField] private PathController pathController;
-    [SerializeField] private GuideFollower guideFollower;
+    private GuideFollower currentGuide;
+
+    [SerializeField] private GuideFollower parentGuideFollower;
 
     private BaseSphereItem sphereItem;
 
@@ -31,7 +33,7 @@ public class PathFollower : MonoBehaviour
     private void Awake()
     {
         sphereItem = GetComponent<BaseSphereItem>();
-        guideFollower = GetComponent<GuideFollower>();
+        currentGuide = GetComponent<GuideFollower>();
 
         distanceTravelled = 0.1f;
     }
@@ -65,18 +67,17 @@ public class PathFollower : MonoBehaviour
 
     public bool HasGuideFollower()
     {
-        return guideFollower;
+        return currentGuide;
+    }
+
+    public bool HasParentGuideFollower()
+    {
+        return parentGuideFollower;
     }
 
     public GuideFollower GetGuideFollower()
     {
-        return guideFollower;
-    }
-
-    public void SetStartDistance(float newDistance)
-    {
-        distanceTravelled = newDistance;
-        SetDistanceTravelled();
+        return currentGuide;
     }
 
     private void SetDistanceTravelled()
@@ -86,15 +87,22 @@ public class PathFollower : MonoBehaviour
             PathCreator pathCreator = pathController.GetPathCreator();
             transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
             transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
-            Debug.Log("Set In: " + distanceTravelled);
+            //Debug.Log("Set In: " + newTravelledValue);
         }
     }
 
     [ContextMenu("Make Guides")]
     public void AddGuides()
     {
-        if (!HasGuideFollower())
-            guideFollower = gameObject.AddComponent<GuideFollower>();
+        if (!HasGuideFollower()) 
+            currentGuide = gameObject.AddComponent<GuideFollower>();
+
+        parentGuideFollower = currentGuide;
+    }
+
+    public void SetParentGuideFollower(GuideFollower parentGuideFollower)
+    {
+        this.parentGuideFollower = parentGuideFollower;
     }
 
     [SerializeField] private int index;
@@ -108,14 +116,20 @@ public class PathFollower : MonoBehaviour
     {
         if (HasPathController())
         {
-            if (pathController.HasElementInList(this))
+            if (pathController.HasFollowerInList(this))
             {
-                int index = pathController.GetIndex(this);
+                int index = pathController.GetFollowerIndex(this);
                 Debug.Log($"Check Index | Temp: {this.index} / In List: {index}");
             }
             else
                 Debug.Log("Element Not Found");
         }
+    }
+
+    public void SetMoveDistance(float newDistance)
+    {
+        distanceTravelled = newDistance;
+        SetDistanceTravelled();
     }
 
     public void ChangePathController(PathController pathController)
@@ -130,8 +144,10 @@ public class PathFollower : MonoBehaviour
 
     private bool CheckIsMove()
     {
-        if (HasGuideFollower())
-            return guideFollower.IsMove;
+        if (HasParentGuideFollower())
+        {
+            return parentGuideFollower.IsMove;
+        }
         else
             return isLocalMove;
     }
@@ -148,15 +164,14 @@ public class PathFollower : MonoBehaviour
 
     public void Move(float speed = 0)
     {
-        if (!HasPathController() || !pathController.HasPathCreator())
+        PathCreator pathCreator = pathController.GetPathCreator();
+        if (pathCreator == null)
         {
             isLocalMove = false;
             return;
         }
         else
             isLocalMove = true;
-
-        PathCreator pathCreator = pathController.GetPathCreator();
 
         //  if not cheese, set default speed
         if (speed == 0)
