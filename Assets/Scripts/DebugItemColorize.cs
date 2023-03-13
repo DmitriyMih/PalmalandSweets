@@ -34,7 +34,7 @@ public class DebugItemColorize : MonoBehaviour
             sphereItem = pathFollower.GetSphereItem();
 
             if (isRandomColor)
-                SetColorInItem(sphereItem, GetRandomMaterial());
+                SetColorInItem(sphereItem, itemSO: GetRandomSO());
             else
                 SetColorInItem(sphereItem, defaultMaterial);
         }
@@ -52,26 +52,32 @@ public class DebugItemColorize : MonoBehaviour
                 sphereItem = debugFollowersList[i].GetSphereItem();
 
             if (isRandomColor)
-                SetColorInItem(sphereItem, GetRandomMaterial());
+                SetColorInItem(sphereItem, itemSO: GetRandomSO());
             else
                 SetColorInItem(sphereItem, defaultMaterial);
         }
     }
 
-    private Material GetRandomMaterial()
+    private BaseSphereItemSO GetRandomSO()
     {
         int index = Random.Range(0, sphereItemsSO.Count);
-        Debug.Log("Index: " + index);
-        return sphereItemsSO[index].material;
+        return sphereItemsSO[index];
     }
 
-    private void SetColorInItem(BaseSphereItem sphereItem, Material newMaterial)
+    private void SetColorInItem(BaseSphereItem sphereItem, Material newMaterial = null, BaseSphereItemSO itemSO = null)
     {
-        if (sphereItem == null || newMaterial == null)
+        if (sphereItem == null)
             return;
 
-        Debug.Log($"Set Material: {newMaterial} | In: {sphereItem}");
-        if (sphereItem.HasRenderer())
-            sphereItem.SetRenderMaterial(newMaterial);
+        if (itemSO != null)
+        {
+            sphereItem.SetSphereItemSO(itemSO);
+            sphereItem.SetRenderMaterial(itemSO.material);
+        }
+        else
+        {
+            if (sphereItem.HasRenderer() && newMaterial != null)
+                sphereItem.SetRenderMaterial(newMaterial);
+        }
     }
 }

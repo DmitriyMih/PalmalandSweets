@@ -152,7 +152,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 0
   index: 0
-  tempMaterial: {fileID: 0}
+  tempMaterial: {fileID: 2100000, guid: 2b7be8c3232290f4daa3bcbcf2a37e5d, type: 2}
 --- !u!114 &5622891057955660221
 MonoBehaviour:
   m_ObjectHideFlags: 0

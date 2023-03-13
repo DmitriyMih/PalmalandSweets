@@ -29,21 +29,16 @@ public class BaseBullet : MonoBehaviour
 
     [SerializeField] private Direction connectDirection;
 
-    private void Connected(PathFollower connectedPathFollower, Vector3 connectionPosition)
+    private void Connected(PathFollower connectedFollower, Vector3 connectionPosition)
     {
-        Vector2 centralPoint = new Vector2(connectedPathFollower.transform.position.x, connectedPathFollower.transform.position.z);
+        Vector2 centralPoint = new Vector2(connectedFollower.transform.position.x, connectedFollower.transform.position.z);
         Vector2 connectionPoint = new Vector2(connectionPosition.x, connectionPosition.z);
 
         Vector2 direction = connectionPoint - centralPoint;
         connectDirection = direction.y > 0 ? Direction.Forward : Direction.Back;
 
-        if (connectedPathFollower.GetPathController() != null)
-        {
-            //if (this.pathFollower != null)
-                //this.pathFollower.ChangePathController(connectedPathFollower.GetPathController());
-
-            //connectedPathFollower.GetPathController().AddWithOffset(connectedPathFollower, connectedPathFollower, connectDirection);
-        }
+        if (connectedFollower.HasPathController())
+            connectedFollower.DestroyItem();
     }
 
     private void DestroyBullet()

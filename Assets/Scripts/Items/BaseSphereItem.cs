@@ -18,6 +18,7 @@ public class BaseSphereItem : MonoBehaviour
 
     [Header("Color Settings")]
     private Renderer colorRenderer;
+    [SerializeField] private int itemTtypeId;
 
     private void Awake()
     {
@@ -33,9 +34,15 @@ public class BaseSphereItem : MonoBehaviour
             if (bodyTransform != null)
             {
                 float rotationSpeed = pathFollower == null ? this.defaultRotationSpeed : pathFollower.CurrentRotationSpeed;
-                bodyTransform.transform.Rotate(rotationDirection, rotationSpeed);        
+                bodyTransform.transform.Rotate(rotationDirection, rotationSpeed);
             }
         }
+    }
+
+    public void SetSphereItemSO(BaseSphereItemSO baseSphereItemSO)
+    {
+        sphereItemSO = baseSphereItemSO;
+        itemTtypeId = sphereItemSO == null ? -1 : sphereItemSO.typeId;
     }
 
     public void SetRenderMaterial(Material newMaterial)

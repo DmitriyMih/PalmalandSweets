@@ -213,6 +213,8 @@ public class PathFollower : MonoBehaviour
             int offcet = 2;
             if (count > 1)
                 offcet = 1;
+            else if (count == 1)
+                offcet = 0;
             else
                 offcet = pathController.GetFollowersCount();
 

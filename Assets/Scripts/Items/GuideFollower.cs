@@ -175,7 +175,7 @@ public class GuideFollower : MonoBehaviour
             return false;
 
         GuideFollower targetGuideFollower = pathController.GetGuiderByIndex(currentIndex + 1);
-        int offcet = childObjects.Count == 0 ? 1 : childObjects.Count;
+        float offcet = childObjects.Count == 0 ? 1f : childObjects.Count + 1;
 
         if (targetGuideFollower.GetPathFollower().GetDistanceTravelled() + offcet >= pathFollower.GetDistanceTravelled())
         {
