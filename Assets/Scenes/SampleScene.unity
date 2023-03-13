@@ -493,6 +493,7 @@ GameObject:
   - component: {fileID: 390820673}
   - component: {fileID: 390820674}
   - component: {fileID: 390820675}
+  - component: {fileID: 390820676}
   m_Layer: 0
   m_Name: Reciever
   m_TagString: Untagged
@@ -528,6 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0b4e3fa99ad5845bac01b0cb77016f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathController: {fileID: 1140220380}
 --- !u!54 &390820674
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -557,6 +559,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 1, z: -0.25}
+--- !u!114 &390820676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390820671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb51bc98b0d3c414caf75476b793a292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathFollower: {fileID: 0}
+  currentBehavior: 0
+  chaseSpeed: 0.5
+  isMoveDirectionForward: 1
+  isMove: 1
+  childObjects: []
+  endFollowSpeed: 12
 --- !u!1 &398095834
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,7 +1634,7 @@ MonoBehaviour:
   pathController: {fileID: 1140220380}
   itemPrefab: {fileID: 3461072335263972985, guid: e6a1455ceeacf0e4a9fdc5c830055d8d, type: 3}
   spawnPoint: {fileID: 1494419421}
-  maxSpawnCount: 0
+  maxSpawnCount: 75
   currentSpawnCount: 0
   maxSpawnTime: 1
   currentSpawnTime: 0
@@ -1630,13 +1651,14 @@ GameObject:
   - component: {fileID: 1140220380}
   - component: {fileID: 1140220378}
   - component: {fileID: 1140220381}
+  - component: {fileID: 1140220382}
   m_Layer: 0
   m_Name: Path
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1140220378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1778,10 +1800,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distributor: {fileID: 1074727295}
-  followingSpeed: 1
+  followingSpeed: 2.5
   itemFollowersList: []
   guideFollowersList: []
   tempList: []
+  endGuideFollower: {fileID: 390820676}
+  isEndGame: 0
 --- !u!114 &1140220381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,6 +1830,36 @@ MonoBehaviour:
   meshFilter: {fileID: 2006170640}
   meshRenderer: {fileID: 2006170639}
   mesh: {fileID: 1939368359}
+--- !u!114 &1140220382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140220376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fec1fcfd3d32fa4eaa69341d457e4ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 2100000, guid: b6932dda3de10344983762a31831353e, type: 2}
+  distributor: {fileID: 1074727295}
+  sphereItemsSO:
+  - {fileID: 11400000, guid: 5e9508ab4d1a5854a82fd06435ca90a9, type: 2}
+  - {fileID: 11400000, guid: e46c5251c2588754c890af21696266ae, type: 2}
+  - {fileID: 11400000, guid: 8278f0ba5e41d6c48b66181f64b92330, type: 2}
+  isRandomColor: 1
+  debugFollowersList:
+  - {fileID: 202133281}
+  - {fileID: 1142512164}
+  - {fileID: 205469689}
+  - {fileID: 958981636}
+  - {fileID: 2027053361}
+  - {fileID: 472280670}
+  - {fileID: 1980731254}
+  - {fileID: 1185746773}
+  - {fileID: 404209950}
+  - {fileID: 1895052868}
 --- !u!1 &1142512161
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,6 +2567,8 @@ MonoBehaviour:
   - {fileID: 0}
   guideFollowersList: []
   tempList: []
+  endGuideFollower: {fileID: 0}
+  isEndGame: 0
 --- !u!114 &1356366512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2721,12 +2777,13 @@ MonoBehaviour:
   towerTransform: {fileID: 5806971427778045927}
   lockTowerOnXZ: 1
   IsTraking: 0
-  maxChargedTime: 0.25
+  maxChargedTime: 0.5
   currentChargedTime: 0
   muzzlePoint: {fileID: 1962968026}
   bulletPrefab: {fileID: 835073058848793711, guid: 44f4a9102b8bc7e40a04eef13d174063, type: 3}
   baseSphereItemSO: []
   loadedBullet: {fileID: 0}
+  GameState: 0
 --- !u!1 &1766604547
 GameObject:
   m_ObjectHideFlags: 0

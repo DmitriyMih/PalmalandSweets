@@ -34,10 +34,14 @@ public class Distributor : MonoBehaviour
         if (currentSpawnCount <= 0 || pathController == null || spawnPoint == null)
             return;
 
+        if (pathController.isEndGame)
+            return;
+
         if (currentSpawnTime >= maxSpawnTime * acceleration)
         {
             currentSpawnTime = 0;
-            currentSpawnCount -= 1;
+            currentSpawnCount -= 1; 
+            InstatiateSphere();
         }
         else
             currentSpawnTime += Time.deltaTime;
@@ -47,6 +51,7 @@ public class Distributor : MonoBehaviour
     {
         PathFollower item = Instantiate(itemPrefab, spawnPoint.position, Quaternion.identity);
         pathController.AddItemInPath(item);
+        InstatiateAction?.Invoke(item);
     }
 
     public void ChangeSpeedAcceleration(float newSpeed)

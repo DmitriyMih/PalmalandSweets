@@ -10,7 +10,7 @@ public enum Behavior
     Stop
 }
 
-public class GuideFollower : MonoBehaviour
+public class BaseGuideFollower : MonoBehaviour
 {
     [Header("Connect Settings")]
     [SerializeField] private PathFollower pathFollower;
@@ -56,7 +56,7 @@ public class GuideFollower : MonoBehaviour
         SetGuideFollower(this);
     }
 
-    private void SetGuideFollower(GuideFollower follower)
+    private void SetGuideFollower(BaseGuideFollower follower)
     {
         for (int i = 0; i < childObjects.Count; i++)
         {
@@ -77,7 +77,7 @@ public class GuideFollower : MonoBehaviour
         return pathFollower;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         float defaultSpeed = 0;
         CheckBehavior(ref defaultSpeed);
@@ -86,7 +86,7 @@ public class GuideFollower : MonoBehaviour
             Move(defaultSpeed);
     }
 
-    private void Move(float speed)
+    protected void Move(float speed)
     {
         if (pathFollower != null)
             pathFollower.Move(speed);
@@ -146,7 +146,7 @@ public class GuideFollower : MonoBehaviour
         if (currentIndex == pathController.GetGuidersCount() - 1)
             return false;
 
-        GuideFollower targetGuideFollower = pathController.GetGuiderByIndex(currentIndex + 1);
+        BaseGuideFollower targetGuideFollower = pathController.GetGuiderByIndex(currentIndex + 1);
 
         if (targetGuideFollower.GetPathFollower().GetDistanceTravelled() + childObjects.Count + 1f >= pathFollower.GetDistanceTravelled())
         {
@@ -174,7 +174,7 @@ public class GuideFollower : MonoBehaviour
         if (currentIndex == pathController.GetGuidersCount() - 1)
             return false;
 
-        GuideFollower targetGuideFollower = pathController.GetGuiderByIndex(currentIndex + 1);
+        BaseGuideFollower targetGuideFollower = pathController.GetGuiderByIndex(currentIndex + 1);
         float offcet = childObjects.Count == 0 ? 1f : childObjects.Count + 1;
 
         if (targetGuideFollower.GetPathFollower().GetDistanceTravelled() + offcet >= pathFollower.GetDistanceTravelled())
@@ -188,7 +188,7 @@ public class GuideFollower : MonoBehaviour
         return false;
     }
 
-    private void JoinGuideFollower(GuideFollower guideFollower)
+    private void JoinGuideFollower(BaseGuideFollower guideFollower)
     {
         guideFollower.GetPathFollower().RemoveGuides();
 

@@ -15,7 +15,7 @@ public class PathController : MonoBehaviour
     private float tempSpeed;
 
     [SerializeField] private List<PathFollower> itemFollowersList = new List<PathFollower>();
-    [SerializeField] private List<GuideFollower> guideFollowersList = new List<GuideFollower>();
+    [SerializeField] private List<BaseGuideFollower> guideFollowersList = new List<BaseGuideFollower>();
 
     private void Awake()
     {
@@ -76,17 +76,17 @@ public class PathController : MonoBehaviour
     #endregion
 
     #region Guiders
-    public bool HasGuiderInList(GuideFollower guideFollower)
+    public bool HasGuiderInList(BaseGuideFollower guideFollower)
     {
         return guideFollowersList.Contains(guideFollower);
     }
 
-    public int GetGuiderIndex(GuideFollower guideFollower)
+    public int GetGuiderIndex(BaseGuideFollower guideFollower)
     {
         return guideFollowersList.IndexOf(guideFollower);
     }
 
-    public GuideFollower GetGuiderByIndex(int index)
+    public BaseGuideFollower GetGuiderByIndex(int index)
     {
         return (index > 0 || index < guideFollowersList.Count) ? guideFollowersList[index] : null;
     }
@@ -123,6 +123,9 @@ public class PathController : MonoBehaviour
     [ContextMenu("Update Indexes")]
     public void UpdateIndexes()
     {
+        if (isEndGame)
+            return;
+
         itemFollowersList.Clear();
         guideFollowersList.Clear();
 
@@ -136,7 +139,7 @@ public class PathController : MonoBehaviour
 
         Debug.Log("Update Indexes");
 
-        GuideFollower tempFollower = itemFollowersList[0].GetGuideFollower();
+        BaseGuideFollower tempFollower = itemFollowersList[0].GetGuideFollower();
         List<PathFollower> tempGuideChilds = new List<PathFollower>();
 
         //  Index updatings
@@ -151,7 +154,7 @@ public class PathController : MonoBehaviour
             //  Updating child objects of the guides
             if (follower.HasGuideFollower())
             {
-                GuideFollower currentFollower = follower.GetGuideFollower();
+                BaseGuideFollower currentFollower = follower.GetGuideFollower();
                 currentFollower.name = "Guide Follower " + guideFollowersList.Count;
 
                 //Debug.Log($"Find Follower: {currentFollower.name} | Temp Childs: {tempGuideChilds.Count}");
@@ -216,7 +219,7 @@ public class PathController : MonoBehaviour
         }
     }
 
-    public void RemoveGuideFollower(GuideFollower guideFollower)
+    public void RemoveGuideFollower(BaseGuideFollower guideFollower)
     {
         guideFollowersList.Remove(guideFollower);
     }
@@ -274,6 +277,35 @@ public class PathController : MonoBehaviour
             itemFollowersList[endIndex].AddGuides();
 
         StartCoroutine(CooldownActions(0.01f));
+    }
+
+    [SerializeField] private BaseGuideFollower endGuideFollower;
+    public bool isEndGame = false;
+
+    public void EndGameMovement()
+    {
+        isEndGame = true;
+        Debug.Log("Game State: " + isEndGame);
+
+        if (endGuideFollower == null)
+            return;
+
+        if (CannonController.Instance != null)
+            CannonController.Instance.GameStateChanged?.Invoke(false);
+
+        //for (int i = 0; i < itemFollowersList.Count; i++)
+        //itemFollowersList[i].SetParentGuideFollower(endGuideFollower);
+
+        endGuideFollower.UpdateChilds(itemFollowersList);
+    }
+
+    public void RemoveFollowItem(PathFollower pathFollower)
+    {
+        if (HasFollowerInList(pathFollower))
+        {
+            itemFollowersList.Remove(pathFollower);
+            Destroy(pathFollower.gameObject);
+        }
     }
 
     private IEnumerator CooldownActions(float cooldown)

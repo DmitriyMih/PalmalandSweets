@@ -8,9 +8,9 @@ public class PathFollower : MonoBehaviour
 {
     [Header("Connect Settings")]
     [SerializeField] private PathController pathController;
-    private GuideFollower currentGuide;
+    private BaseGuideFollower currentGuide;
 
-    [SerializeField] private GuideFollower parentGuideFollower;
+    [SerializeField] private BaseGuideFollower parentGuideFollower;
 
     private BaseSphereItem sphereItem;
 
@@ -33,7 +33,7 @@ public class PathFollower : MonoBehaviour
     private void Awake()
     {
         sphereItem = GetComponent<BaseSphereItem>();
-        currentGuide = GetComponent<GuideFollower>();
+        currentGuide = GetComponent<BaseGuideFollower>();
         parentGuideFollower = currentGuide;
 
         distanceTravelled = 0.1f;
@@ -89,7 +89,7 @@ public class PathFollower : MonoBehaviour
         return parentGuideFollower;
     }
 
-    public GuideFollower GetGuideFollower()
+    public BaseGuideFollower GetGuideFollower()
     {
         return currentGuide;
     }
@@ -113,7 +113,7 @@ public class PathFollower : MonoBehaviour
     {
         if (!HasGuideFollower())
         {
-            currentGuide = gameObject.AddComponent<GuideFollower>().GetComponent<GuideFollower>();
+            currentGuide = gameObject.AddComponent<BaseGuideFollower>().GetComponent<BaseGuideFollower>();
 
             Debug.Log(currentGuide.name);
             parentGuideFollower = currentGuide;
@@ -127,7 +127,7 @@ public class PathFollower : MonoBehaviour
     }
     #endregion
 
-    public void SetParentGuideFollower(GuideFollower parentGuideFollower)
+    public void SetParentGuideFollower(BaseGuideFollower parentGuideFollower)
     {
         this.parentGuideFollower = parentGuideFollower;
     }
