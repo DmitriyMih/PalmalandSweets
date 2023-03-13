@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class Distributor : MonoBehaviour
 
     [SerializeField] private float acceleration;
 
+    public Action<PathFollower> InstatiateAction;
+
     private void Awake()
     {
         currentSpawnCount = maxSpawnCount;
@@ -35,12 +38,15 @@ public class Distributor : MonoBehaviour
         {
             currentSpawnTime = 0;
             currentSpawnCount -= 1;
-
-            PathFollower item = Instantiate(itemPrefab, spawnPoint.position, Quaternion.identity);
-            pathController.AddItemInPath(item);
         }
         else
             currentSpawnTime += Time.deltaTime;
+    }
+
+    private void InstatiateSphere()
+    {
+        PathFollower item = Instantiate(itemPrefab, spawnPoint.position, Quaternion.identity);
+        pathController.AddItemInPath(item);
     }
 
     public void ChangeSpeedAcceleration(float newSpeed)

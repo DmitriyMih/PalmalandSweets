@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 2055564864}
   defaultRotationSpeed: 1
@@ -252,6 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 1339188079}
   defaultRotationSpeed: 1
@@ -620,7 +622,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -694,6 +696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 398095835}
   defaultRotationSpeed: 1
@@ -802,7 +805,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -876,6 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 2020571908}
   defaultRotationSpeed: 1
@@ -984,7 +988,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1081,7 +1085,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1272,7 +1276,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1429,6 +1433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 638366028}
   defaultRotationSpeed: 1
@@ -1852,7 +1857,7 @@ MonoBehaviour:
   thickness: 0.5
   flattenSurface: 0
   roadMaterial: {fileID: 2100000, guid: 0c0449c66e8503448bf57254d68b4bef, type: 2}
-  undersideMaterial: {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  undersideMaterial: {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   textureTiling: 1
   meshHolder: {fileID: 2006170638}
   meshFilter: {fileID: 2006170640}
@@ -1902,6 +1907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 1340248251}
   defaultRotationSpeed: 1
@@ -1987,6 +1993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 1354138472}
   defaultRotationSpeed: 1
@@ -2153,7 +2160,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2250,7 +2257,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2347,7 +2354,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2420,6 +2427,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1356366509}
   - component: {fileID: 1356366511}
+  - component: {fileID: 1356366512}
   - component: {fileID: 1356366508}
   - component: {fileID: 1356366510}
   m_Layer: 0
@@ -2483,10 +2491,10 @@ MonoBehaviour:
     showNormalsInVertexMode: 1
     showBezierPathInVertexMode: 0
     showDisplayOptions: 1
-    showPathOptions: 1
+    showPathOptions: 0
     showVertexPathDisplayOptions: 1
     showVertexPathOptions: 1
-    showNormals: 1
+    showNormals: 0
     showNormalsHelpInfo: 0
     tabIndex: 0
   initialized: 1
@@ -2523,7 +2531,7 @@ MonoBehaviour:
   thickness: 0.5
   flattenSurface: 0
   roadMaterial: {fileID: 2100000, guid: 0c0449c66e8503448bf57254d68b4bef, type: 2}
-  undersideMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
+  undersideMaterial: {fileID: 2100000, guid: df8d4b74667e70a4e984cc9c48a67f55, type: 2}
   textureTiling: 0
   meshHolder: {fileID: 1869813062}
   meshFilter: {fileID: 1869813064}
@@ -2560,6 +2568,36 @@ MonoBehaviour:
   - {fileID: 0}
   guideFollowersList: []
   tempList: []
+--- !u!114 &1356366512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356366507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fec1fcfd3d32fa4eaa69341d457e4ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 2100000, guid: b6932dda3de10344983762a31831353e, type: 2}
+  distributor: {fileID: 0}
+  sphereItemsSO:
+  - {fileID: 11400000, guid: 5e9508ab4d1a5854a82fd06435ca90a9, type: 2}
+  - {fileID: 11400000, guid: e46c5251c2588754c890af21696266ae, type: 2}
+  - {fileID: 11400000, guid: 8278f0ba5e41d6c48b66181f64b92330, type: 2}
+  isRandomColor: 1
+  debugFollowersList:
+  - {fileID: 202133281}
+  - {fileID: 1142512164}
+  - {fileID: 205469689}
+  - {fileID: 958981636}
+  - {fileID: 2027053361}
+  - {fileID: 472280670}
+  - {fileID: 1980731254}
+  - {fileID: 1185746773}
+  - {fileID: 404209950}
+  - {fileID: 1895052868}
 --- !u!1 &1364419623
 GameObject:
   m_ObjectHideFlags: 0
@@ -2866,8 +2904,8 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 0c0449c66e8503448bf57254d68b4bef, type: 2}
-  - {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
-  - {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
+  - {fileID: 2100000, guid: df8d4b74667e70a4e984cc9c48a67f55, type: 2}
+  - {fileID: 2100000, guid: df8d4b74667e70a4e984cc9c48a67f55, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2969,6 +3007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 537313642}
   defaultRotationSpeed: 1
@@ -3238,6 +3277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 853483726}
   defaultRotationSpeed: 1
@@ -3319,8 +3359,8 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 0c0449c66e8503448bf57254d68b4bef, type: 2}
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3445,7 +3485,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3519,6 +3559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 439936840}
   defaultRotationSpeed: 1
@@ -3627,7 +3668,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

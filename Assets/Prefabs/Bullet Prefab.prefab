@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 25
+  pathFollower: {fileID: 0}
+  connectDirection: 0
 --- !u!114 &-3558684226781234388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,11 +64,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d5592373c75e54c84d4ffc57d35224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 0}
-  sphereItem: {fileID: 0}
+  pathController: {fileID: 0}
+  parentGuideFollower: {fileID: 0}
+  currentRotationSpeed: 1
   distanceTravelled: 0
+  isLocalMove: 1
+  currentSpeed: 0
   followSpeed: 1.5
-  isMove: 0
+  index: 0
+  tempMaterial: {fileID: 0}
 --- !u!114 &2617568779356871823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,9 +85,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a25d779e043c4aa739465be6138a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereItemSO: {fileID: 0}
   pathFollower: {fileID: 0}
   bodyTransform: {fileID: 167195861301886081}
-  rotationSpeed: 1
+  defaultRotationSpeed: 1
   isMove: 0
 --- !u!54 &835073058848793711
 Rigidbody:
@@ -174,7 +181,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
+  - {fileID: 2100000, guid: a74a76b209d71c646ad4d004a79cca7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

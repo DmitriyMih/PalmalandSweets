@@ -41,16 +41,29 @@ public class PathFollower : MonoBehaviour
 
     private void OnEnable()
     {
-        if (sphereItem != null)
+        if (HasSphereItem())
             sphereItem.AddFollower(this);
     }
 
     private void OnDisable()
     {
-        if (sphereItem != null)
+        if (HasSphereItem())
             sphereItem.RemoveFollower();
     }
 
+    #region Base Item
+    public bool HasSphereItem()
+    {
+        return sphereItem;
+    }
+
+    public BaseSphereItem GetSphereItem()
+    {
+        return sphereItem;
+    }
+    #endregion
+
+    #region Path/Move
     public PathController GetPathController()
     {
         return pathController;
@@ -90,6 +103,9 @@ public class PathFollower : MonoBehaviour
             transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
         }
     }
+    #endregion
+
+
 
     #region Guides
     [ContextMenu("Make Guides")]

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BaseSphereItem : MonoBehaviour
 {
+    [SerializeField] private BaseSphereItemSO sphereItemSO;
+
     [Header("Connect Settings")]
     [SerializeField] private PathFollower pathFollower;
 
@@ -12,12 +14,14 @@ public class BaseSphereItem : MonoBehaviour
     [SerializeField] private float defaultRotationSpeed = 1f;
 
     [SerializeField] protected bool isMove;
-
     private Vector3 rotationDirection = Vector3.up;
+
+    [Header("Color Settings")]
+    private Renderer colorRenderer;
 
     private void Awake()
     {
-        
+        colorRenderer = GetComponentInChildren<Renderer>();
     }
 
     private void FixedUpdate()
@@ -34,6 +38,28 @@ public class BaseSphereItem : MonoBehaviour
         }
     }
 
+    public void SetRenderMaterial(Material newMaterial)
+    {
+        if (!HasRenderer())
+            return;
+
+        colorRenderer.material = newMaterial;
+    }
+
+    public bool HasRenderer()
+    {
+        return colorRenderer;
+    }
+
+    public bool HasItemSO()
+    {
+        return sphereItemSO;
+    }
+
+    public int GetItemId()
+    {
+        return sphereItemSO.typeId;
+    }
 
     public void AddFollower(PathFollower pathFollower)
     {
