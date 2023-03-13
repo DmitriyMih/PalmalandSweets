@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class GuideFollower : MonoBehaviour
     [Header("Move Settings"), Space(10)]
     [SerializeField] private bool isMoveDirectionForward = true;
     [SerializeField] private bool isMove = true;
+
+    [SerializeField, Range(0, 10)] private float chaseSpeed = 1f;
+
     public bool IsMove => isMove;
 
     [Header("Child Settings"), Space(10)]
@@ -55,8 +59,10 @@ public class GuideFollower : MonoBehaviour
     private void SetGuideFollower(GuideFollower follower)
     {
         for (int i = 0; i < childObjects.Count; i++)
+        {
             if (childObjects[i] != null)
                 childObjects[i].SetParentGuideFollower(follower);
+        }
     }
 
     public bool HasPathFollower()
@@ -85,6 +91,12 @@ public class GuideFollower : MonoBehaviour
 
         for (int i = 0; i < childObjects.Count; i++)
         {
+            if (childObjects[i] == null)
+            {
+                //Debug.Log($"Child In Index: {i} | Not Found");
+                continue;
+            }
+
             childObjects[i].Move(speed);
         }
     }
@@ -106,12 +118,12 @@ public class GuideFollower : MonoBehaviour
 
             case Behavior.FollowBack:
                 isMoveDirectionForward = false;
-                speed = -3f;
+                speed = -chaseSpeed;
                 isMove = CheckTheBackwardMovement();
                 break;
 
             case Behavior.Stop:
-                isMove = false;
+                isMove = CheckStopConnection();
                 break;
         }
     }
@@ -122,34 +134,69 @@ public class GuideFollower : MonoBehaviour
             return false;
 
         PathController pathController = pathFollower.GetPathController();
-        if (pathController.HasGuiderInList(this))
-        {
-            int index = pathController.GetGuiderIndex(this);
-            GuideFollower targetFollower = new GuideFollower();
-
-            if (index == pathController.GetGuidersCount() - 1)
-            {
-                Debug.Log("End Element");
-                currentBehavior = Behavior.Stop;
-                return false;
-            }
-            else
-                targetFollower = pathController.GetGuiderByIndex(index + 1);
-
-            if (targetFollower.GetPathFollower().GetDistanceTravelled() + childObjects.Count + 1f >= pathFollower.GetDistanceTravelled())
-            {
-                currentBehavior = Behavior.Stop;
-                Debug.Log("Stop Element");
-                return false;
-            }
-            else
-                return true;
-        }
-        else
+        if (!pathController.HasGuiderInList(this))
         {
             Debug.Log($"Element In {pathController.name} | Not Found");
             return false;
         }
+
+        int currentIndex = pathController.GetGuiderIndex(this);
+        if (currentIndex == pathController.GetGuidersCount() - 1)
+            return false;
+
+        GuideFollower targetGuideFollower = pathController.GetGuiderByIndex(currentIndex + 1);
+
+        if (targetGuideFollower.GetPathFollower().GetDistanceTravelled() + childObjects.Count + 1f >= pathFollower.GetDistanceTravelled())
+        {
+            JoinGuideFollower(targetGuideFollower);
+            currentBehavior = Behavior.FollowThePath;
+            Debug.Log("Return Following Element");
+        }
+
+        return true;
+    }
+
+    private bool CheckStopConnection()
+    {
+        if (!HasPathFollower() || !pathFollower.HasPathController())
+            return false;
+
+        PathController pathController = pathFollower.GetPathController();
+        if (!pathController.HasGuiderInList(this))
+        {
+            Debug.Log($"Element In {pathController.name} | Not Found");
+            return false;
+        }
+
+        int currentIndex = pathController.GetGuiderIndex(this);
+        if (currentIndex == pathController.GetGuidersCount() - 1)
+            return false;
+
+        GuideFollower targetGuideFollower = pathController.GetGuiderByIndex(currentIndex + 1);
+
+        if (targetGuideFollower.GetPathFollower().GetDistanceTravelled() + childObjects.Count >= pathFollower.GetDistanceTravelled())
+        {
+            JoinGuideFollower(targetGuideFollower);
+            currentBehavior = Behavior.FollowThePath;
+            Debug.Log("Stop Element");
+            return true;
+        }
+
+        return false;
+    }
+
+    private void JoinGuideFollower(GuideFollower guideFollower)
+    {
+        guideFollower.GetPathFollower().RemoveGuides();
+
+        if (guideFollower.GetPathFollower().HasPathController())
+            StartCoroutine(CooldownAction(guideFollower.GetPathFollower().GetPathController().UpdateIndexes, 0.01f));
+    }
+
+    private IEnumerator CooldownAction(Action action, float cooldown)
+    {
+        yield return new WaitForSeconds(cooldown);
+        action();
     }
 
     #endregion

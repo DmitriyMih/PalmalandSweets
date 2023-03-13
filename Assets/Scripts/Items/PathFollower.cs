@@ -88,10 +88,10 @@ public class PathFollower : MonoBehaviour
             PathCreator pathCreator = pathController.GetPathCreator();
             transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
             transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
-            //Debug.Log("Set In: " + newTravelledValue);
         }
     }
 
+    #region Guides
     [ContextMenu("Make Guides")]
     public void AddGuides()
     {
@@ -104,6 +104,13 @@ public class PathFollower : MonoBehaviour
         }
     }
 
+    public void RemoveGuides()
+    {
+        if (HasGuideFollower())
+            Destroy(currentGuide);
+    }
+    #endregion
+
     public void SetParentGuideFollower(GuideFollower parentGuideFollower)
     {
         this.parentGuideFollower = parentGuideFollower;
@@ -113,21 +120,6 @@ public class PathFollower : MonoBehaviour
     public void SetIndex(int newIndex)
     {
         index = newIndex;
-    }
-
-    [ContextMenu("Get Object Index")]
-    private void GetObjectIndex()
-    {
-        if (HasPathController())
-        {
-            if (pathController.HasFollowerInList(this))
-            {
-                int index = pathController.GetFollowerIndex(this);
-                Debug.Log($"Check Index | Temp: {this.index} / In List: {index}");
-            }
-            else
-                Debug.Log("Element Not Found");
-        }
     }
 
     public void SetMoveDistance(float newDistance)
@@ -168,14 +160,14 @@ public class PathFollower : MonoBehaviour
 
     public void Move(float speed = 0)
     {
-        PathCreator pathCreator = pathController.GetPathCreator();
-        if (pathCreator == null)
+        if (!HasPathController() || !GetPathController().HasPathCreator())
         {
             isLocalMove = false;
             return;
         }
-        else
-            isLocalMove = true;
+
+        PathCreator pathCreator = pathController.GetPathCreator();
+        isLocalMove = true;
 
         //  if not cheese, set default speed
         if (speed == 0)
@@ -184,8 +176,19 @@ public class PathFollower : MonoBehaviour
         currentSpeed = speed;
         distanceTravelled += currentSpeed * Time.deltaTime;
 
-        //distanceTravelled = Mathf.Clamp(distanceTravelled, 0.1f, Mathf.RoundToInt(pathCreator.path.length) - 0.1f);
         transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
+    }
+
+    [ContextMenu("Destroy Item")]
+    public void DestroyItem()
+    {
+        if (HasPathController())
+        {
+            Debug.Log("Normal");
+            pathController.RemoveSphereItem(this);
+        }
+
+        Destroy(gameObject);
     }
 }

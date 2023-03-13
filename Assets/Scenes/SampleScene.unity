@@ -232,7 +232,6 @@ GameObject:
   - component: {fileID: 202133281}
   - component: {fileID: 202133280}
   - component: {fileID: 202133279}
-  - component: {fileID: 202133283}
   m_Layer: 2
   m_Name: Sphere Item (1)
   m_TagString: Untagged
@@ -305,27 +304,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &202133283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202133278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fb9b9eda225e5f4cbcc3598d95ce44b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathFollower: {fileID: 0}
-  currentBehavior: 0
-  isMoveDirectionForward: 1
-  isMove: 1
-  childObjects:
-  - {fileID: 1142512164}
-  - {fileID: 205469689}
-  - {fileID: 958981636}
-  - {fileID: 2027053361}
 --- !u!1 &205469686
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +854,6 @@ GameObject:
   - component: {fileID: 569546272}
   - component: {fileID: 569546271}
   - component: {fileID: 569546270}
-  - component: {fileID: 569546269}
   m_Layer: 2
   m_Name: Sphere Item (7)
   m_TagString: Untagged
@@ -884,27 +861,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &569546269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 569546268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fb9b9eda225e5f4cbcc3598d95ce44b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathFollower: {fileID: 0}
-  currentBehavior: 1
-  isMoveDirectionForward: 1
-  isMove: 1
-  childObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 2027053361}
 --- !u!135 &569546270
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1354,7 +1310,6 @@ GameObject:
   - component: {fileID: 843156039}
   - component: {fileID: 843156038}
   - component: {fileID: 843156037}
-  - component: {fileID: 843156036}
   m_Layer: 2
   m_Name: Sphere Item (11)
   m_TagString: Untagged
@@ -1362,27 +1317,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &843156036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843156035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fb9b9eda225e5f4cbcc3598d95ce44b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathFollower: {fileID: 0}
-  currentBehavior: 2
-  isMoveDirectionForward: 1
-  isMove: 1
-  childObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 2102647531}
 --- !u!135 &843156037
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1515,7 +1449,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e03db559bf008774189182684b64bc3a, type: 2}
+  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2073,7 +2007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distributor: {fileID: 1074727295}
   followingSpeed: 1
-  itemsList: []
+  itemFollowersList: []
   guideFollowers: []
 --- !u!114 &1140220381
 MonoBehaviour:
@@ -2697,14 +2631,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distributor: {fileID: 0}
-  followingSpeed: 1
-  itemsList:
+  followingSpeed: 0.2
+  itemFollowersList:
   - {fileID: 202133281}
   - {fileID: 1142512164}
   - {fileID: 205469689}
   - {fileID: 958981636}
   - {fileID: 2027053361}
   - {fileID: 569546272}
+  - {fileID: 810571635}
+  - {fileID: 1659199159}
+  - {fileID: 2060116699}
+  - {fileID: 2102647531}
+  - {fileID: 843156039}
   guideFollowers: []
 --- !u!1 &1364419623
 GameObject:
@@ -2902,7 +2841,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e03db559bf008774189182684b64bc3a, type: 2}
+  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3686,7 +3625,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e03db559bf008774189182684b64bc3a, type: 2}
+  - {fileID: 2100000, guid: d1d243e4c7570ff4ba7a859b3dafe6e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
