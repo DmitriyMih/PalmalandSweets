@@ -273,7 +273,7 @@ public class PathController : MonoBehaviour
         if (endIndex < itemFollowersList.Count && endIndex > 0)
             itemFollowersList[endIndex].AddGuides();
 
-        StartCoroutine(CooldownActions(0.1f));
+        StartCoroutine(CooldownActions(0.01f));
     }
 
     private IEnumerator CooldownActions(float cooldown)

@@ -222,7 +222,7 @@ public class PathFollower : MonoBehaviour
             for (int i = 0; i < pathFollowers.Count; i++)
             {
                 Material tempMaterial = new Material(this.tempMaterial);
-                tempMaterial.color = Color.blue;
+                tempMaterial.color = Color.green;
 
                 Renderer renderer = pathFollowers[i].GetComponentInChildren<Renderer>();
                 renderer.material = tempMaterial;

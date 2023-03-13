@@ -19,10 +19,10 @@ public class GuideFollower : MonoBehaviour
     [SerializeField] private Behavior currentBehavior;
 
     [Header("Move Settings"), Space(10)]
+    [SerializeField, Range(0, 10)] private float chaseSpeed = 0.5f;
+
     [SerializeField] private bool isMoveDirectionForward = true;
     [SerializeField] private bool isMove = true;
-
-    [SerializeField, Range(0, 10)] private float chaseSpeed = 1f;
 
     public bool IsMove => isMove;
 
@@ -60,8 +60,10 @@ public class GuideFollower : MonoBehaviour
     {
         for (int i = 0; i < childObjects.Count; i++)
         {
-            if (childObjects[i] != null)
-                childObjects[i].SetParentGuideFollower(follower);
+            if (childObjects[i] == null)
+                continue;
+
+            childObjects[i].SetParentGuideFollower(follower);
         }
     }
 
@@ -173,8 +175,9 @@ public class GuideFollower : MonoBehaviour
             return false;
 
         GuideFollower targetGuideFollower = pathController.GetGuiderByIndex(currentIndex + 1);
+        int offcet = childObjects.Count == 0 ? 1 : childObjects.Count;
 
-        if (targetGuideFollower.GetPathFollower().GetDistanceTravelled() + childObjects.Count >= pathFollower.GetDistanceTravelled())
+        if (targetGuideFollower.GetPathFollower().GetDistanceTravelled() + offcet >= pathFollower.GetDistanceTravelled())
         {
             JoinGuideFollower(targetGuideFollower);
             currentBehavior = Behavior.FollowThePath;
