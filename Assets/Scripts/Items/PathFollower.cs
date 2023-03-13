@@ -197,8 +197,20 @@ public class PathFollower : MonoBehaviour
     }
 
     [SerializeField] private Material tempMaterial;
-    [ContextMenu("Destroy Item")]
     public void DestroyItem()
+    {
+        if (HasPathController())
+        {
+            List<PathFollower> destroyList = new List<PathFollower>();
+            destroyList.Add(this);
+            pathController.RemoveSphereItems(destroyList);
+
+            Destroy(gameObject);
+        }
+    }
+
+    [ContextMenu("Destroy Item")]
+    public void DestroyItems()
     {
         List<PathFollower> pathFollowers = new List<PathFollower>();
 

@@ -11,15 +11,47 @@ public class CannonController : MonoBehaviour
 
     [SerializeField] private bool lockTowerOnXZ = true;
     [SerializeField, Space(5)] private bool IsTraking;
-   
+
+    [Header("Charged Settings")]
+
+    [SerializeField] private float maxChargedTime = 0.25f;
+    [SerializeField] private float currentChargedTime;
+    [SerializeField] private bool isCharged => loadedBullet;
+
     [Header("Shoot Settings")]
     [SerializeField] private Transform muzzlePoint;
-    [SerializeField] private BaseBullet bulletPrefab;
+    [SerializeField] private Rigidbody bulletPrefab;
+
+    [SerializeField, Space(5)] private List<BaseSphereItemSO> baseSphereItemSO = new List<BaseSphereItemSO>();
+    [SerializeField] private BaseBullet loadedBullet;
+
+    private void Awake()
+    {
+        currentChargedTime = maxChargedTime;
+    }
 
     private void Update()
     {
+        Recharge();
         GetInput();
         TowerRotation();
+    }
+
+    private void Recharge()
+    {
+        if (isCharged)
+            return;
+
+        if (currentChargedTime <= 0)
+        {
+            currentChargedTime = maxChargedTime;
+            Rigidbody bulletClone = Instantiate(bulletPrefab, muzzlePoint.transform.position, Quaternion.identity);
+            bulletClone.transform.parent = muzzlePoint.transform;
+
+            loadedBullet = bulletClone.gameObject.GetComponent<BaseBullet>();
+        }
+        else
+            currentChargedTime -= Time.deltaTime;
     }
 
     private void GetInput()
@@ -38,7 +70,7 @@ public class CannonController : MonoBehaviour
         }
         else
         {
-            if (IsTraking)
+            if (isCharged && IsTraking)
                 Shoot();
 
             IsTraking = false;
@@ -58,11 +90,13 @@ public class CannonController : MonoBehaviour
 
     private void Shoot()
     {
-        if (bulletPrefab == null)
+        if (loadedBullet == null)
             return;
 
-        Debug.Log("Shoot");
-        BaseBullet bulletClone = Instantiate(bulletPrefab, muzzlePoint.position, towerTransform.rotation);
-        bulletClone.GetComponent<Rigidbody>().velocity = towerTransform.forward * bulletClone.GetSpeed();
+        Debug.Log("Shot");
+        loadedBullet.GetComponent<Rigidbody>().velocity = towerTransform.forward * loadedBullet.GetSpeed();
+        
+        loadedBullet.transform.parent = null;
+        loadedBullet = null;
     }
 }
