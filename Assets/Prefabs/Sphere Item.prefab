@@ -170,6 +170,7 @@ MonoBehaviour:
   bodyTransform: {fileID: 7165374136517561195}
   defaultRotationSpeed: 1
   isMove: 0
+  itemTtypeId: 0
 --- !u!135 &3461072335263972986
 SphereCollider:
   m_ObjectHideFlags: 0
