@@ -180,15 +180,59 @@ public class PathFollower : MonoBehaviour
         transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
     }
 
+    [SerializeField] private Material tempMaterial;
     [ContextMenu("Destroy Item")]
     public void DestroyItem()
     {
+        List<PathFollower> pathFollowers = new List<PathFollower>();
+
         if (HasPathController())
         {
             Debug.Log("Normal");
-            pathController.RemoveSphereItem(this);
+            //pathController.RemoveSphereItem(this);
+            int index = pathController.GetFollowerIndex(this);
+            int count = pathController.GetFollowersCount();
+            int startIndex = 0;
+
+            int offcet = 2;
+            if (count > 2)
+                offcet = 2;
+            else
+                offcet = pathController.GetFollowersCount();
+
+            if (index == 0)
+            {
+                startIndex = index + offcet;
+                for (int i = index; i <= index + offcet; i++)
+                    pathFollowers.Add(pathController.GetFollowerByIndex(i));
+            }
+            else if (index == count - 1)
+            {
+                startIndex = index;
+                for (int i = index - offcet; i <= index; i++)
+                    pathFollowers.Add(pathController.GetFollowerByIndex(i));
+            }
+            else
+            {
+                startIndex = index + 1;
+                for (int i = index - 1; i <= index + 1; i++)
+                    pathFollowers.Add(pathController.GetFollowerByIndex(i));
+            }
+
+            for (int i = 0; i < pathFollowers.Count; i++)
+            {
+                Material tempMaterial = new Material(this.tempMaterial);
+                tempMaterial.color = Color.blue;
+
+                Renderer renderer = pathFollowers[i].GetComponentInChildren<Renderer>();
+                renderer.material = tempMaterial;
+            }
+
+            pathController.RemoveSphereItems(pathFollowers);
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        for (int i = 0; i < pathFollowers.Count; i++)
+            Destroy(pathFollowers[i].gameObject);
     }
 }

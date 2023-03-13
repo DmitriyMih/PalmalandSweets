@@ -63,6 +63,16 @@ public class PathController : MonoBehaviour
     {
         return itemFollowersList.IndexOf(pathFollower);
     }
+
+    public PathFollower GetFollowerByIndex(int index)
+    {
+        return (index > 0 || index < itemFollowersList.Count) ? itemFollowersList[index] : null;
+    }
+
+    public int GetFollowersCount()
+    {
+        return itemFollowersList.Count;
+    }
     #endregion
 
     #region Guiders
@@ -230,6 +240,40 @@ public class PathController : MonoBehaviour
         itemFollowersList.Remove(sphereItem);
 
         StartCoroutine(CooldownActions(0.01f));
+    }
+
+    [SerializeField] private List<PathFollower> tempList = new List<PathFollower>();
+    [SerializeField] private Dictionary<PathFollower, int> destroyDictionary = new Dictionary<PathFollower, int>();
+    public void RemoveSphereItems(List<PathFollower> sphereItemsList)
+    {
+        int endIndex = 0;
+        tempList = sphereItemsList;
+
+        for (int i = 0; i < sphereItemsList.Count; i++)
+        {
+            PathFollower sphereItem = sphereItemsList[i];
+            if (sphereItem == null || !HasFollowerInList(sphereItem))
+                continue;
+
+            int index = GetFollowerIndex(sphereItem);
+            if (index > endIndex)
+                endIndex = index;
+
+            Debug.Log($"End Index: {endIndex} | Index: {index}");
+
+            sphereItem.ChangePathController(null);
+            sphereItem.transform.parent = null;
+            sphereItem.name = "Sphere Follower";
+
+            //itemFollowersList.Remove(sphereItem);
+            itemFollowersList.RemoveAt(index);
+        }
+
+        Debug.Log($"| Last | End Index: {endIndex}");
+        if (endIndex < itemFollowersList.Count - 1 && endIndex > 0)
+            itemFollowersList[endIndex].AddGuides();
+
+        StartCoroutine(CooldownActions(0.1f));
     }
 
     private IEnumerator CooldownActions(float cooldown)

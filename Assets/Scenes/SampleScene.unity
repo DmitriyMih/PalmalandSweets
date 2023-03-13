@@ -288,6 +288,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &202133282
 Transform:
   m_ObjectHideFlags: 0
@@ -372,6 +373,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &205469690
 Transform:
   m_ObjectHideFlags: 0
@@ -910,6 +912,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &569546273
 Transform:
   m_ObjectHideFlags: 0
@@ -1282,6 +1285,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &810571636
 Transform:
   m_ObjectHideFlags: 0
@@ -1366,6 +1370,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &843156040
 Transform:
   m_ObjectHideFlags: 0
@@ -1630,6 +1635,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &958981637
 Transform:
   m_ObjectHideFlags: 0
@@ -2008,7 +2014,7 @@ MonoBehaviour:
   distributor: {fileID: 1074727295}
   followingSpeed: 1
   itemFollowersList: []
-  guideFollowers: []
+  guideFollowersList: []
 --- !u!114 &1140220381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2101,6 +2107,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &1142512165
 Transform:
   m_ObjectHideFlags: 0
@@ -2644,7 +2651,7 @@ MonoBehaviour:
   - {fileID: 2060116699}
   - {fileID: 2102647531}
   - {fileID: 843156039}
-  guideFollowers: []
+  guideFollowersList: []
 --- !u!1 &1364419623
 GameObject:
   m_ObjectHideFlags: 0
@@ -2939,6 +2946,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &1659199160
 Transform:
   m_ObjectHideFlags: 0
@@ -3542,6 +3550,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &2027053362
 Transform:
   m_ObjectHideFlags: 0
@@ -3723,6 +3732,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!4 &2060116700
 Transform:
   m_ObjectHideFlags: 0
@@ -3778,6 +3788,7 @@ MonoBehaviour:
   currentSpeed: 0
   followSpeed: 10
   index: 0
+  tempMaterial: {fileID: 2100000, guid: 2797c72b9fc49c348b0b66c346e2b2ff, type: 2}
 --- !u!135 &2102647532
 SphereCollider:
   m_ObjectHideFlags: 0

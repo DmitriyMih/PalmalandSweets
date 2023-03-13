@@ -10,7 +10,6 @@ public class BaseSphereItem : MonoBehaviour
     [Header("Rotation Settings")]
     [SerializeField] private Transform bodyTransform;
     [SerializeField] private float defaultRotationSpeed = 1f;
-    //[SerializeField] private float currentRotationSpeed;
 
     [SerializeField] protected bool isMove;
 
