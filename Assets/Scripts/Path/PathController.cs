@@ -270,7 +270,7 @@ public class PathController : MonoBehaviour
         }
 
         Debug.Log($"| Last | End Index: {endIndex}");
-        if (endIndex < itemFollowersList.Count - 1 && endIndex > 0)
+        if (endIndex < itemFollowersList.Count && endIndex > 0)
             itemFollowersList[endIndex].AddGuides();
 
         StartCoroutine(CooldownActions(0.1f));

@@ -195,8 +195,8 @@ public class PathFollower : MonoBehaviour
             int startIndex = 0;
 
             int offcet = 2;
-            if (count > 2)
-                offcet = 2;
+            if (count > 1)
+                offcet = 1;
             else
                 offcet = pathController.GetFollowersCount();
 
@@ -231,7 +231,6 @@ public class PathFollower : MonoBehaviour
             pathController.RemoveSphereItems(pathFollowers);
         }
 
-        //Destroy(gameObject);
         for (int i = 0; i < pathFollowers.Count; i++)
             Destroy(pathFollowers[i].gameObject);
     }
