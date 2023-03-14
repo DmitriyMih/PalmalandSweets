@@ -19,7 +19,7 @@ public class BaseGuideFollower : MonoBehaviour
     [SerializeField] private Behavior currentBehavior;
 
     [Header("Move Settings"), Space(10)]
-    [SerializeField, Range(0, 10)] private float chaseSpeed = 0.5f;
+    [SerializeField, Range(0, 10)] private float chaseSpeed = 3f;
 
     [SerializeField] private bool isMoveDirectionForward = true;
     [SerializeField] private bool isMove = true;

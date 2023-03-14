@@ -38,7 +38,7 @@ public class BaseBullet : MonoBehaviour
         connectDirection = direction.y > 0 ? Direction.Forward : Direction.Back;
 
         if (connectedFollower.HasPathController() && CheckForDestruction())
-            connectedFollower.DestroyItem();
+            connectedFollower.DestroyItems();
     }
 
     private bool CheckForDestruction()

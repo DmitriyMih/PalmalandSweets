@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour
 {
-    public static CannonController Instance;
-
     [Header("Tower Settings")]
     [SerializeField] private Transform towerTransform;
 
@@ -28,35 +26,20 @@ public class CannonController : MonoBehaviour
     [SerializeField, Space(5)] private List<BaseSphereItemSO> baseSphereItemSO = new List<BaseSphereItemSO>();
     [SerializeField] private BaseBullet loadedBullet;
 
-    public Action<bool> GameStateChanged;
-    public bool GameState;
-
     private void Awake()
     {
-        Instance = this;
-
         currentChargedTime = maxChargedTime;
-        GameStateChanged += CannonController_GameStateChanged;
-    }
-
-    private void Start()
-    {
-        CannonController_GameStateChanged(true);
     }
 
     private void Update()
     {
-        if (!GameState)
-            return;
+        if (GameManager.Instance != null)
+            if (!GameManager.Instance.GameInProgress)
+                return;
 
         Recharge();
         GetInput();
         TowerRotation();
-    }
-
-    private void CannonController_GameStateChanged(bool gameState)
-    {
-        GameState = gameState;
     }
 
     private void Recharge()

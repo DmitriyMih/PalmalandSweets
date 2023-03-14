@@ -17,6 +17,8 @@ public class PathController : MonoBehaviour
     [SerializeField] private List<PathFollower> itemFollowersList = new List<PathFollower>();
     [SerializeField] private List<BaseGuideFollower> guideFollowersList = new List<BaseGuideFollower>();
 
+    [SerializeField] private BaseGuideFollower endGuideFollower;
+
     private void Awake()
     {
         pathCreator = GetComponent<PathCreator>();
@@ -25,6 +27,8 @@ public class PathController : MonoBehaviour
     private void Start()
     {
         DebugInitializationList();
+        if (GameManager.Instance != null)
+            GameManager.Instance.GameStateChanged += EndGameMovement;
     }
 
     private void DebugInitializationList()
@@ -123,8 +127,9 @@ public class PathController : MonoBehaviour
     [ContextMenu("Update Indexes")]
     public void UpdateIndexes()
     {
-        if (isEndGame)
-            return;
+        if (GameManager.Instance != null)
+            if (!GameManager.Instance.GameInProgress)
+                return;
 
         itemFollowersList.Clear();
         guideFollowersList.Clear();
@@ -279,22 +284,10 @@ public class PathController : MonoBehaviour
         StartCoroutine(CooldownActions(0.01f));
     }
 
-    [SerializeField] private BaseGuideFollower endGuideFollower;
-    public bool isEndGame = false;
-
-    public void EndGameMovement()
+    public void EndGameMovement(bool gameState)
     {
-        isEndGame = true;
-        Debug.Log("Game State: " + isEndGame);
-
-        if (endGuideFollower == null)
+        if (endGuideFollower == null || gameState)
             return;
-
-        if (CannonController.Instance != null)
-            CannonController.Instance.GameStateChanged?.Invoke(false);
-
-        //for (int i = 0; i < itemFollowersList.Count; i++)
-        //itemFollowersList[i].SetParentGuideFollower(endGuideFollower);
 
         endGuideFollower.UpdateChilds(itemFollowersList);
     }

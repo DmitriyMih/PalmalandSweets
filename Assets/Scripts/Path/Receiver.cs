@@ -12,8 +12,13 @@ public class Receiver : MonoBehaviour
         {
             if (pathController != null)
             {
-                if (!pathController.isEndGame)
-                    pathController.EndGameMovement();
+                if (GameManager.Instance != null)
+                {
+                    if (GameManager.Instance.GameInProgress)
+                        GameManager.Instance.GameStateChanged?.Invoke(false);
+                    else
+                        pathController.RemoveFollowItem(pathFollower);
+                }
                 else
                     pathController.RemoveFollowItem(pathFollower);
             }
